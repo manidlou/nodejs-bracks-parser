@@ -27,9 +27,9 @@ Since html document structure relies on start and end tags, we still need an ide
 
 **1. comments**
 
-bracks comment: `c[your valuable comment]c`
+bracks comment: `c[your helpful comment]c`
   
-html comment: `<!--your values comment-->`
+html comment: `<!--your helpful comment-->`
 
 **2. start tag without attributes**
 
