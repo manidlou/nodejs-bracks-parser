@@ -176,7 +176,7 @@ So, something like the following will do the job for you.
 var express = require('express');
 var bracks_parser = require('bracks-parser');
 
-var path_to_bracks_directory = '/absolute/path/to/bracks/directory';
+var path_to_bracks_directory = '/home/you/yourproj/bracks';
 
 var app = express();
 
