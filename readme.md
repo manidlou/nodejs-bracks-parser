@@ -119,7 +119,7 @@ For the rest of the tags, you just simply don't need to type `<` or `>` anymore 
 `_%>` | `_%`
 
 
-That's it. As long as you follow these simple and relatively intuitive agreements, you will no longer need to insert any `<` and `>` for html or ejs elements. Just write it `bracks` style, pass your source code to `bracks-parser` and then receive your clean and complete html or ejs document for any intended usage. Also, you don't need to worry about the extra whitespaces because at the end the `bracks-parser` cleans up its work and trims the entire document as much as it can before outputs the final result.
+That's it. As long as you follow these simple and relatively intuitive agreements, you will no longer need to insert any `<` and `>` for html or ejs elements. Just write it `bracks` style, pass your source code to `bracks-parser` and then receive your clean and complete html or ejs document that is ready to use for any purposes.
 
 #####Example of a `bracks` style html document
 *index.html*:
