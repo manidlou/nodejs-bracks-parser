@@ -13,7 +13,6 @@
 const Vfile = require('vinyl');
 const vfs = require('vinyl-fs');
 const thru = require('through2');
-const SOURCE_PATH = './views/bracks/**/*.+(html|ejs)';
 
 /**
  * end tags regular expressions object mapping
@@ -373,10 +372,10 @@ const EJS_TAGS = {
  * @public
  */
 
-function bracks_parser() {
+function bracks_parser(src_path) {
   return function bracks_parser(req, res, next) {
     var i, split_path, resolved_file_path, src, transformed_file, error;
-    vfs.src(SOURCE_PATH).pipe(thru.obj(function(file, enc, callback) {
+    vfs.src(src_path + '/**/*.+(html|ejs)').pipe(thru.obj(function(file, enc, callback) {
       if (file.isNull()) {
         error = new Error('bracks-parser error -> input file is null');
         next(error);
