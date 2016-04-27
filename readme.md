@@ -6,7 +6,7 @@
 #####Install `bracks-parser` for use as an express middleware
 Please use `npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency.
 #####Use as a gulp plugin
-`bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://www.npmjs.com/package/gulp-bracks).
+`bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
 #####Performance
 Here is what happens under the hood:
 
