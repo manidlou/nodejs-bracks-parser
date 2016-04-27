@@ -90,27 +90,35 @@ In order to escape a character or a word, just put `\` before or after the chara
 ####`ejs` and `bracks` hand in hand
 If you want to use `bracks` syntax in your [ejs](https://github.com/mde/ejs) document, please use the following agreements (I call them agreements since I personally don't like rules as I am a fan of freedom!):
 
-All `<` is replaced with `[`, and similarly all `>` are replaced with `]`. So,
+**1.Scriptlet tag**
 
 *ejs | bracks-style ejs equivalent*
 
 `<%` | `[%`
 
-`<%=` | `[%=`
+**2.Plain ending tag**
 
-`<%-` | `[%-`
+*ejs | bracks-style ejs equivalent*
 
-`<%#` | `[%#`
+`%>` | `%]` 
 
-`<%%` | `[%%`
+For the rest of the tags, you just simply don't need to type `<` or `>` anymore (the parser will add them for you). So,
 
-`<%_' | `[%_`
+*ejs | bracks-style ejs equivalent*
 
-`%>` | `%]`
+`<%=` | `%=`
 
-`_%>` | `_%]`
+`<%-` | `%-`
 
-`-%>` | `-%]`
+`<%#` | `%#`
+
+`<%%` | `%%`
+
+`<%_` | `%_`
+
+`-%>` | `-%`
+
+`_%>` | `_%`
 
 
 That's it. As long as you follow these simple and relatively intuitive agreements, you will no longer need to insert any `<` and `>` for html or ejs elements. Just write it `bracks` style, pass your source code to `bracks-parser` and then receive your clean and complete html or ejs document for any intended usage. Also, you don't need to worry about the extra whitespaces because at the end the `bracks-parser` cleans up its work and trims the entire document as much as it can before outputs the final result.
@@ -148,15 +156,15 @@ html[
     link(rel="stylesheet" href="/stylesheets/style.css")]
     meta(charset="utf-8")]
   ]head
-  body(class="[%= page %]")[
+  body(class="%= page %]")[
     [% include partials/template/header.ejs %]
       section(class="layout")[
         div(class="primary")[
-          [%- include partials/content/home-page.ejs -%]
+          %- include partials/content/home-page.ejs -%
         ]div
         p[explore your mind]p
         aside(class="secondary")[
-          [%- include partials/content/proj-page.ejs %]
+          %- include partials/content/proj-page.ejs %]
         ]aside
       ]section
     [% include partials/template/footer.ejs %]

@@ -353,14 +353,14 @@ const VOID_TAGS_WITHOUT_ATTR = {
  */
 const EJS_TAGS = {
   '<%': /(?:\[%)/g,
-  '<%=': /(?:\[%=)/g,
-  '<%-': /(?:\[%\-)/g,
-  '<%#': /(?:\[%#)/g,
-  '<%%': /(?:\[%%)/g,
+  '<%=': /(?:%=)/g,
+  '<%-': /(?:%\-)/g,
+  '<%#': /(?:%#)/g,
+  '<%%': /(?:%%)/g,
   '%>': /(?:%\])/g,
-  '-%>': /(?:\-%\])/g,
-  '<%_': /(?:\[%_)/g,
-  '_%>': /(?:_%\])/g
+  '-%>': /(?:\-%)/g,
+  '<%_': /(?:%_)/g,
+  '_%>': /(?:_%)/g
 };
 
 /**
@@ -403,7 +403,7 @@ function bracks_parser() {
       src = src.replace(/(?:\)\[)|(?:\)\])/g, '>');
       src = src.replace(/(?:\\)/g, '');
       src = src.replace(/(?:> <)/g, '><');
-      
+
       resolved_file_path = '';
       split_path = (file.path).split('/');
       if (split_path.indexOf('bracks') !== -1) {
@@ -421,8 +421,8 @@ function bracks_parser() {
       });
       return callback(null, transformed_file);
     })).pipe(vfs.dest('./'))
-      .on('end', function() {
-        next();
+    .on('end', function() {
+      next();
     });
   };
 }
