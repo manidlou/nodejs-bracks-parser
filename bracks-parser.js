@@ -212,7 +212,7 @@ const START_TAGS_WITHOUT_ATTR = {
 };
 
 /**
- * start tags with attributes regular expressions object mapping
+ * start and void tags with attributes regular expressions object mapping
  * @private
  */
 const START_TAGS_WITH_ATTR = {
@@ -366,20 +366,21 @@ const EJS_TAGS = {
 /**
  * bracks-parser express middleware main function
  *
- * get source files as vinyl files in 'dslash' directory 
- * under 'views' directory. Pipe them through stream objects,
- * parse them all and pipe the result documents to 'views' directory 
- * and call the next middleware.
+ * get source files as vinyl file objects under 'bracks' directory. 
+ * Pipe them through2 stream transform function, parse them all, pipe 
+ * the result documents to the project root directory, and call 
+ * the next middleware. If find any errors, call the next middleware 
+ * and pass the error as the argument.
  *
- * @param {String} [src_path] absolute path to `bracks` directory
+ * @param {String} [bracks_src_path] absolute path to `bracks` directory
  * @return {Function}
  * @public
  */
 
-function bracks_parser(src_path) {
+function bracks_parser(bracks_src_path) {
   return function bracks_parser(req, res, next) {
     var i, split_path, resolved_file_path, src, transformed_file, error;
-    vfs.src(path.join(src_path, '/**/*.+(html|ejs)'))
+    vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
       .pipe(thru.obj(function(file, enc, callback) {
         if (file.isNull()) {
           error = new Error('bracks-parser error -> input file is null');
