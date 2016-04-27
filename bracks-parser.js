@@ -212,10 +212,31 @@ const START_TAGS_WITHOUT_ATTR = {
 };
 
 /**
+ * void tags without attributes regular expressions object mapping
+ * @private
+ */
+const VOID_TAGS_WITHOUT_ATTR = {
+  '<area>': /(?:\[\barea\b\])/g,
+  '<base>': /(?:\[\bbase\b\])/g,
+  '<br>': /(?:\[\bbr\b\])/g,
+  '<col>': /(?:\[\bcol\b\])/g,
+  '<embed>': /(?:\[\bembed\b\])/g,
+  '<hr>': /(?:\[\bhr\b\])/g,
+  '<img>': /(?:\[\bimg\b\])/g,
+  '<input>': /(?:\[\binput\b\])/g,
+  '<keygen>': /(?:\[\bkeygen\b\])/g,
+  '<link>': /(?:\[\blink\b\])/g,
+  '<meta>': /(?:\[\bmeta\b\])/g,
+  '<param>': /(?:\[\bparam\b\])/g,
+  '<source>': /(?:\[\bsource\b\])/g,
+  '<track>': /(?:\[\btrack\b\])/g,
+  '<wbr>': /(?:\[\bwbr\b\])/g
+};
+/**
  * start and void tags with attributes regular expressions object mapping
  * @private
  */
-const START_TAGS_WITH_ATTR = {
+const START_VOID_TAGS_WITH_ATTR = {
   '<a ': /(?:\ba\b\()/g,
   '<abbr ': /(?:\babbr\b\()/g,
   '<address ': /(?:\baddress\b\()/g,
@@ -326,28 +347,6 @@ const START_TAGS_WITH_ATTR = {
 };
 
 /**
- * void tags without attributes regular expressions object mapping
- * @private
- */
-const VOID_TAGS_WITHOUT_ATTR = {
-  '<area>': /(?:\[\barea\b\])/g,
-  '<base>': /(?:\[\bbase\b\])/g,
-  '<br>': /(?:\[\bbr\b\])/g,
-  '<col>': /(?:\[\bcol\b\])/g,
-  '<embed>': /(?:\[\bembed\b\])/g,
-  '<hr>': /(?:\[\bhr\b\])/g,
-  '<img>': /(?:\[\bimg\b\])/g,
-  '<input>': /(?:\[\binput\b\])/g,
-  '<keygen>': /(?:\[\bkeygen\b\])/g,
-  '<link>': /(?:\[\blink\b\])/g,
-  '<meta>': /(?:\[\bmeta\b\])/g,
-  '<param>': /(?:\[\bparam\b\])/g,
-  '<source>': /(?:\[\bsource\b\])/g,
-  '<track>': /(?:\[\btrack\b\])/g,
-  '<wbr>': /(?:\[\bwbr\b\])/g
-};
-
-/**
  * ejs specific tags regular expressions object mapping
  * @private
  */
@@ -399,8 +398,8 @@ function bracks_parser(bracks_src_path) {
         Object.keys(START_TAGS_WITHOUT_ATTR).forEach(function(key) {
           src = src.replace(START_TAGS_WITHOUT_ATTR[key], key);
         });
-        Object.keys(START_TAGS_WITH_ATTR).forEach(function(key) {
-          src = src.replace(START_TAGS_WITH_ATTR[key], key);
+        Object.keys(START_VOID_TAGS_WITH_ATTR).forEach(function(key) {
+          src = src.replace(START_VOID_TAGS_WITH_ATTR[key], key);
         });
         Object.keys(EJS_TAGS).forEach(function(key) {
           src = src.replace(EJS_TAGS[key], key);
