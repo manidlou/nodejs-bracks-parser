@@ -411,7 +411,7 @@ function bracks_parser(src_path) {
         resolved_file_path = '';
         split_path = (file.path).split('/');
         if (split_path.indexOf('bracks') === -1) {
-          error = new Error('bracks-parser error -> absolute path to \'bracks\' dir cannot be null. please make sure the path is correctly provided for the parser.');
+          error = new Error('bracks-parser error -> absolute path to \'bracks\' dir cannot be null. please make sure the path is properly provided for the parser.');
           next(error);
           return callback(error, file);
         } else {
