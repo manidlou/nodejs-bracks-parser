@@ -45,11 +45,11 @@ html-example: `<div>`
    
 bracks: `tagname(list of all attributes and their values)[`
     
-bracks-example: `div(id="myDivId" class="my-div-class")[`
+bracks-example: `div(id="yourDivId" class="yourdivclass")[`
     
 html: `<tagname list of all attributes and their values>`
     
-html-example: `<div id="myDivId" class="my-div-class">`
+html-example: `<div id="yourDivId" class="yourdivclass">`
 
 **4.void tag without attributes**
 
@@ -100,7 +100,7 @@ If you want to use `bracks` syntax in your [ejs](https://github.com/mde/ejs) doc
 
 `%>` | `%]` 
 
-For the rest of the tags, you just simply don't need to type `<` or `>` anymore (the parser will add them for you). So,
+For the rest of the tags, you just simply don't need to type `<` or `>` anymore (the parser will add them for you). For instance, instead of typing `<%= page %>`, you type `%= page %]`. So,
 
 *ejs | bracks-style ejs equivalent*
 
