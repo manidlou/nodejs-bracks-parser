@@ -172,7 +172,7 @@ html[
 #####How to use with express
 If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located inside sub-direcories. It doesn't matter. The `bracks-parser` will find them and pipes them to their destinations under project root directory, after parses them all to html or ejs. In fact, the file extension doesn't matter for the parser. Either `.html` or `.ejs`, it parses the files under `bracks` directory based on the `bracks` syntax and pipes the result files with their own extensions to their destinations.
 
-So, we can `use` the `bracks-parser` after we `set` the express `views` path,
+So, something like the following will do the job for you.
 
 ```javascript
 var express = require('express');
