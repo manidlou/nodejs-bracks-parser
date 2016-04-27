@@ -364,7 +364,7 @@ const EJS_TAGS = {
 };
 
 /**
- * Parser as an express middleware
+ * bracks-parser express middleware main function
  *
  * get source files as vinyl files in 'dslash' directory 
  * under 'views' directory. Pipe them through stream objects,
