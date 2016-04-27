@@ -21,9 +21,9 @@ I understand, at first, it looks weird and so unfamiliar especially for a long-t
 Of course, any help, idea, criticism would be all absolutely appreciated.
 
 #####`bracks` simple syntax
-Since html document structure relies on start and end tags, we still need an identifier to distinguish them from the rest of the text. `bracks` uses `[]` and `()` as the main identifier. Here is how we can use `bracks`:
+Since html document structure relies on start and end tags, we still need an identifier to distinguish them from the rest of the text. `bracks` uses `[]` and `()` as the main identifiers. Simply for a normal element, all attributes and their values are placed in `()`, and all the contents of the element are placed in `[]`. Here is how we can use `bracks`:
 
-######Important Notice: `bracks` is **not** a whitespace sensitive syntax. Also, `bracks-parser` doesn't care about whitespace before the first character of each line. In other words, it doesn't touch the indentation of the source file. The indentation of the final result is going to be the same as the source file. If the following simple agreements are maintained throughtout the entire code, you are going to receive your code in a clean and correct format.
+######Important Notice: `bracks` is `not` a whitespace sensitive syntax. Also, `bracks-parser` doesn't care about whitespace before the first character of each line. In other words, it doesn't touch the indentation of the source file. The indentation of the final result is going to be the same as the source file. If the following simple agreements are maintained throughtout the entire code, you are going to receive your code in a clean and correct format.
 
 *In the following description, one single space is denoted by [SPACE]*
 
