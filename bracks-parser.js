@@ -338,13 +338,13 @@ const VOID_TAGS_WITHOUT_ATTR = {
   '<hr>': /(?:\[\bhr\b\])/g,
   '<img>': /(?:\[\bimg\b\])/g,
   '<input>': /(?:\[\binput\b\])/g,
-  '<keygen>': /(?:\[\bkeygen\b\]])/g,
-  '<link>': /(?:\[\blink\b\]])/g,
-  '<meta>': /(?:\[\bmeta\b\]])/g,
-  '<param>': /(?:\[\bparam\b\]])/g,
-  '<source>': /(?:\[\bsource\b\]])/g,
-  '<track>': /(?:\[\btrack\b\]])/g,
-  '<wbr>': /(?:\[\bwbr\b\]])/g
+  '<keygen>': /(?:\[\bkeygen\b\])/g,
+  '<link>': /(?:\[\blink\b\])/g,
+  '<meta>': /(?:\[\bmeta\b\])/g,
+  '<param>': /(?:\[\bparam\b\])/g,
+  '<source>': /(?:\[\bsource\b\])/g,
+  '<track>': /(?:\[\btrack\b\])/g,
+  '<wbr>': /(?:\[\bwbr\b\])/g
 };
 
 /**
