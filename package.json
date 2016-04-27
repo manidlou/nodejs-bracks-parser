@@ -1,7 +1,7 @@
 {
   "name": "bracks-parser",
   "version": "1.0.0",
-  "description": "A simpler and relatively faster way of writing html without using angle brackets",
+  "description": "A simpler and relatively faster way of writing html and ejs without using angle brackets",
   "main": "bracks-parser.js",
   "dependencies": {
     "through2": "^2.0.1",
