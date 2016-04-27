@@ -376,53 +376,54 @@ const EJS_TAGS = {
 function bracks_parser(src_path) {
   return function bracks_parser(req, res, next) {
     var i, split_path, resolved_file_path, src, transformed_file, error;
-    vfs.src(path.join(src_path, '/**/*.+(html|ejs)')).pipe(thru.obj(function(file, enc, callback) {
-      if (file.isNull()) {
-        error = new Error('bracks-parser error -> input file is null');
-        next(error);
-        callback();
-      }
-      src = file.contents.toString();
-      src = src.replace(/(?:\]\bc\b)/g, '-->');
-      src = src.replace(/(?:\bc\b\[)/g, '<!--');
-      Object.keys(VOID_TAGS_WITHOUT_ATTR).forEach(function(key) {
-        src = src.replace(VOID_TAGS_WITHOUT_ATTR[key], key);
-      });
-      Object.keys(END_TAGS).forEach(function(key) {
-        src = src.replace(END_TAGS[key], key);
-      });
-      Object.keys(START_TAGS_WITHOUT_ATTR).forEach(function(key) {
-        src = src.replace(START_TAGS_WITHOUT_ATTR[key], key);
-      });
-      Object.keys(START_TAGS_WITH_ATTR).forEach(function(key) {
-        src = src.replace(START_TAGS_WITH_ATTR[key], key);
-      });
-      Object.keys(EJS_TAGS).forEach(function(key) {
-        src = src.replace(EJS_TAGS[key], key);
-      });
-      src = src.replace(/(?:\)\[)|(?:\)\])/g, '>');
-      src = src.replace(/(?:\\)/g, '');
-      src = src.replace(/(?:> <)/g, '><');
-
-      resolved_file_path = '';
-      split_path = (file.path).split('/');
-      if (split_path.indexOf('bracks') !== -1) {
-        split_path.splice(split_path.indexOf('bracks'), 1);
-        for (i = 0; i < split_path.length; i += 1) {
-          resolved_file_path += split_path[i] + '/';
-        }
-      }
-      resolved_file_path = resolved_file_path.slice(0, resolved_file_path.length - 1);
-      transformed_file = new Vfile({
-        cwd: "",
-        base: "",
-        path: resolved_file_path,
-        contents: new Buffer(src)
-      });
-      return callback(null, transformed_file);
-    })).pipe(vfs.dest('./'))
-    .on('end', function() {
-      next();
+    vfs.src(path.join(src_path, '/**/*.+(html|ejs)'))
+    	.pipe(thru.obj(function(file, enc, callback) {
+      	if (file.isNull()) {
+      	  error = new Error('bracks-parser error -> input file is null');
+        	next(error);
+        	callback();
+      	}
+      	src = file.contents.toString();
+      	src = src.replace(/(?:\]\bc\b)/g, '-->');
+      	src = src.replace(/(?:\bc\b\[)/g, '<!--');
+      	Object.keys(VOID_TAGS_WITHOUT_ATTR).forEach(function(key) {
+        	src = src.replace(VOID_TAGS_WITHOUT_ATTR[key], key);
+      	});
+      	Object.keys(END_TAGS).forEach(function(key) {
+        	src = src.replace(END_TAGS[key], key);
+      	});
+      	Object.keys(START_TAGS_WITHOUT_ATTR).forEach(function(key) {
+        	src = src.replace(START_TAGS_WITHOUT_ATTR[key], key);
+      	});
+      	Object.keys(START_TAGS_WITH_ATTR).forEach(function(key) {
+        	src = src.replace(START_TAGS_WITH_ATTR[key], key);
+      	});
+      	Object.keys(EJS_TAGS).forEach(function(key) {
+      	  src = src.replace(EJS_TAGS[key], key);
+      	});
+      	src = src.replace(/(?:\)\[)|(?:\)\])/g, '>');
+      	src = src.replace(/(?:\\)/g, '');
+      	src = src.replace(/(?:> <)/g, '><');
+      	
+      	resolved_file_path = '';
+      	split_path = (file.path).split('/');
+      	if (split_path.indexOf('bracks') !== -1) {
+        	split_path.splice(split_path.indexOf('bracks'), 1);
+        	for (i = 0; i < split_path.length; i += 1) {
+          	resolved_file_path += split_path[i] + '/';
+        	}
+      	}
+      	resolved_file_path = resolved_file_path.slice(0, resolved_file_path.length - 1);
+      	transformed_file = new Vfile({
+        	cwd: "",
+        	base: "",
+        	path: resolved_file_path,
+        	contents: new Buffer(src)
+      	});
+      	return callback(null, transformed_file);
+    	})).pipe(vfs.dest('./'))
+    	.on('end', function() {
+      	next();
     });
   };
 }
