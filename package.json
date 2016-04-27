@@ -1,0 +1,27 @@
+{
+  "name": "bracks-parser",
+  "version": "1.0.0",
+  "description": "A simpler and relatively faster way of writing html without using angle brackets",
+  "main": "bracks-parser.js",
+  "dependencies": {
+    "through2": "^2.0.1",
+    "vinyl": "^1.1.1",
+    "vinyl-fs": "^2.4.3"
+  },
+  "keywords": [
+    "bracks",
+    "html",
+    "ejs",
+    "bracket"
+  ],
+  "author": "Mawni Maghsoudlou",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mawni/nodejs-bracks-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mawni/nodejs-bracks-parser/issues"
+  },
+  "homepage": "https://github.com/mawni/nodejs-bracks-parser#readme"
+}
