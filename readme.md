@@ -170,7 +170,7 @@ html[
 ]html
 ```
 #####How to use with express
-If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located inside sub-direcories. It doesn't matter. The `bracks-parser` will find them and outputs them with their correct parents under `views` directory, after parses them all to html or ejs. In fact, the file extension doesn't matter for the parser. Either `.html` or `.ejs`, it parses the files under `bracks` directory based on the `bracks` syntax and pipes the result files with their own extensions to their destinations.
+If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located inside sub-direcories. It doesn't matter. The `bracks-parser` will find them and pipes them to their destinations under project root directory, after parses them all to html or ejs. In fact, the file extension doesn't matter for the parser. Either `.html` or `.ejs`, it parses the files under `bracks` directory based on the `bracks` syntax and pipes the result files with their own extensions to their destinations.
 
 So, we can `use` the `bracks-parser` after we `set` the express `views` path,
 
@@ -187,7 +187,7 @@ app.set('view engine', 'ejs');
 
 app.use(bracks_parser(path_to_bracks_directory));
 ```
-Since `bracks-parser` is a view-related middleware, normally it is a good idea to put it early on top of stack of middlewares, just to make sure that we get the files ready on time for rendering purposes. That is, after we set our express app and its `views` path.
+normally it is a good idea to put `bracks-parser` early on top of stack of middlewares since express renders html or ejs not the `bracks` one.
 
 #####Example of `views` directory with sub-directories
 
