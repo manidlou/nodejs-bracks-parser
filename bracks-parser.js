@@ -373,7 +373,7 @@ const EJS_TAGS = {
  * resolve transformed file path
  *
  * @param {Object} [file] a vinyl file object
- * @param {Function} [callback] callback function
+ * @param {Function} [callback] a callback function
  * @return {Function} callback function containing either an error or the resolved file path
  * @private
  */
@@ -395,11 +395,11 @@ function resolve_file_path(file, callback) {
 }
 
 /**
- * parse 'bracks' style html document. If no error found,
- * return the transformed regular html document.
+ * parse 'bracks' style html document. return the transformed regular html document.
  *
  * @param {Object} [file] a vinyl file object
- * @return {Function} [callback] callback function containing the transformed html document
+ * @param {Function} [callback] a callback function
+ * @return {Function} [callback] callback function containing the transformed html
  * @private
  */
 
