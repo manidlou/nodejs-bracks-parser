@@ -370,7 +370,7 @@ const EJS_TAGS = {
 };
 
 /**
- * resolve transformed file path
+ * resolve parsed file path
  *
  * @param {Object} [file] a vinyl file object
  * @param {Function} [callback] a callback function
@@ -395,11 +395,11 @@ function resolve_file_path(file, callback) {
 }
 
 /**
- * parse 'bracks' style html document. return the transformed regular html document.
+ * parse 'bracks' style html document. return the parsed regular html document.
  *
  * @param {Object} [file] a vinyl file object
  * @param {Function} [callback] a callback function
- * @return {Function} [callback] callback function containing the transformed html
+ * @return {Function} callback function containing the parsed regular html
  * @private
  */
 
@@ -443,7 +443,6 @@ function bracks_parser(bracks_src_path) {
   return function bracks_parser(req, res, next) {
     var transformed_ejs_src, transformed_file;
     var error = {};
-
     vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
       .pipe(thru.obj(function(file, enc, callback) {
         if (file.isNull()) {
