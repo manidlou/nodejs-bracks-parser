@@ -10,6 +10,7 @@
  * Module dependencies.
  * @private
  */
+
 const path = require('path');
 const Vfile = require('vinyl');
 const vfs = require('vinyl-fs');
@@ -19,6 +20,7 @@ const thru = require('through2');
  * end tags regular expressions object mapping
  * @private
  */
+
 const END_TAGS = {
   '</a>': /(?:\]\ba\b)/g,
   '</abbr>': /(?:\]\babbr\b)/g,
@@ -116,6 +118,7 @@ const END_TAGS = {
  * start tags without attributes regular expressions object mapping
  * @private
  */
+
 const START_TAGS_WITHOUT_ATTR = {
   '<a>': /(?:\ba\b\[)/g,
   '<abbr>': /(?:\babbr\b\[)/g,
@@ -215,6 +218,7 @@ const START_TAGS_WITHOUT_ATTR = {
  * void tags without attributes regular expressions object mapping
  * @private
  */
+
 const VOID_TAGS_WITHOUT_ATTR = {
   '<area>': /(?:\[\barea\b\])/g,
   '<base>': /(?:\[\bbase\b\])/g,
@@ -232,10 +236,12 @@ const VOID_TAGS_WITHOUT_ATTR = {
   '<track>': /(?:\[\btrack\b\])/g,
   '<wbr>': /(?:\[\bwbr\b\])/g
 };
+
 /**
  * start and void tags with attributes regular expressions object mapping
  * @private
  */
+
 const START_VOID_TAGS_WITH_ATTR = {
   '<a ': /(?:\ba\b\()/g,
   '<abbr ': /(?:\babbr\b\()/g,
@@ -350,6 +356,7 @@ const START_VOID_TAGS_WITH_ATTR = {
  * ejs specific tags regular expressions object mapping
  * @private
  */
+
 const EJS_TAGS = {
   '<%': /(?:\[%)/g,
   '<%=': /(?:%=)/g,
@@ -363,37 +370,18 @@ const EJS_TAGS = {
 };
 
 /**
- * parse 'bracks' style html document. If no error found,
- * return the transformed regular html document.
+ * resolve transformed file path
  *
  * @param {Object} [file] a vinyl file object
- * @return {Function} [callback] callback function containing either error or transformed file
+ * @param {Function} [callback] callback function
+ * @return {Function} callback function containing either an error or the resolved file path
  * @private
  */
-function parse_html(file, callback) {
-  var i, split_path, resolved_file_path, transformed_file;
-  var src = file.contents.toString();
 
-  src = src.replace(/(?:\]\/\bc\b)/g, '-->');
-  src = src.replace(/(?:\bc\b\/\[)/g, '<!--');
-  Object.keys(VOID_TAGS_WITHOUT_ATTR).forEach(function(key) {
-    src = src.replace(VOID_TAGS_WITHOUT_ATTR[key], key);
-  });
-  Object.keys(END_TAGS).forEach(function(key) {
-    src = src.replace(END_TAGS[key], key);
-  });
-  Object.keys(START_TAGS_WITHOUT_ATTR).forEach(function(key) {
-    src = src.replace(START_TAGS_WITHOUT_ATTR[key], key);
-  });
-  Object.keys(START_VOID_TAGS_WITH_ATTR).forEach(function(key) {
-    src = src.replace(START_VOID_TAGS_WITH_ATTR[key], key);
-  });
-  src = src.replace(/(?:\)\[)|(?:\)\])/g, '>');
-  src = src.replace(/(?:\\)/g, '');
-  src = src.replace(/(?:> <)/g, '><');
-
-  resolved_file_path = '';
-  split_path = (file.path).split('/');
+function resolve_file_path(file, callback) {
+  var resolved_file_path = '';
+  var split_path = (file.path).split('/');
+  var i;
   if (split_path.indexOf('bracks') === -1) {
     return callback('bracks-parser error -> path to \'bracks\' directory cannot be null.', file);
   } else {
@@ -402,28 +390,21 @@ function parse_html(file, callback) {
       resolved_file_path += split_path[i] + '/';
     }
     resolved_file_path = resolved_file_path.slice(0, resolved_file_path.length - 1);
-    transformed_file = new Vfile({
-      cwd: "",
-      base: "",
-      path: resolved_file_path,
-      contents: new Buffer(src)
-    });
-    return callback(null, transformed_file);
+    return callback(null, resolved_file_path);
   }
 }
 
 /**
- * parse 'bracks' style ejs document. If no error found, 
- * return the transformed regular ejs document.
+ * parse 'bracks' style html document. If no error found,
+ * return the transformed regular html document.
  *
  * @param {Object} [file] a vinyl file object
- * @return {Function} [callback] callback function containing either error or transformed file
+ * @return {Function} [callback] callback function containing the transformed html document
  * @private
  */
-function parse_ejs(file, callback) {
-  var i, split_path, resolved_file_path, transformed_file;
+
+function parse_html(file, callback) {
   var src = file.contents.toString();
-  
   src = src.replace(/(?:\]\/\bc\b)/g, '-->');
   src = src.replace(/(?:\bc\b\/\[)/g, '<!--');
   Object.keys(VOID_TAGS_WITHOUT_ATTR).forEach(function(key) {
@@ -438,37 +419,16 @@ function parse_ejs(file, callback) {
   Object.keys(START_VOID_TAGS_WITH_ATTR).forEach(function(key) {
     src = src.replace(START_VOID_TAGS_WITH_ATTR[key], key);
   });
-  Object.keys(EJS_TAGS).forEach(function(key) {
-    src = src.replace(EJS_TAGS[key], key);
-  });
   src = src.replace(/(?:\)\[)|(?:\)\])/g, '>');
   src = src.replace(/(?:\\)/g, '');
   src = src.replace(/(?:> <)/g, '><');
-
-  resolved_file_path = '';
-  split_path = (file.path).split('/');
-  if (split_path.indexOf('bracks') === -1) {
-    return callback('bracks-parser error -> path to \'bracks\' directory cannot be null.', file);
-  } else {
-    split_path.splice(split_path.indexOf('bracks'), 1);
-    for (i = 0; i < split_path.length; i += 1) {
-      resolved_file_path += split_path[i] + '/';
-    }
-    resolved_file_path = resolved_file_path.slice(0, resolved_file_path.length - 1);
-    transformed_file = new Vfile({
-      cwd: "",
-      base: "",
-      path: resolved_file_path,
-      contents: new Buffer(src)
-    });
-    return callback(null, transformed_file);
-  }
+  return callback(src);
 }
 
 /**
  * bracks-parser express middleware main function
  *
- * get source files as vinyl file objects under 'bracks' directory. 
+ * get source files (html or ejs) as vinyl file objects under 'bracks' directory. 
  * Pipe them through2 stream transform function, parse them all, pipe 
  * the result documents to the project root directory, and call 
  * the next middleware. If find any errors, call the next middleware 
@@ -481,6 +441,7 @@ function parse_ejs(file, callback) {
 
 function bracks_parser(bracks_src_path) {
   return function bracks_parser(req, res, next) {
+    var transformed_ejs_src, transformed_file;
     var error = {};
 
     vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
@@ -491,23 +452,43 @@ function bracks_parser(bracks_src_path) {
           callback(new Error('bracks-parser error -> input file is null'), file);
         }
         if (file.extname === '.html') {
-          parse_html(file, function(err, transformed_html_file) {
+          resolve_file_path(file, function(err, resolved_file_path) {
             if (err !== null) {
               error.status = 404;
               next(error);
               return callback(new Error(err), file);
             } else {
-              return callback(null, transformed_html_file);
+              parse_html(file, function(transformed_html_src) {
+                transformed_file = new Vfile({
+                  cwd: "",
+                  base: "",
+                  path: resolved_file_path,
+                  contents: new Buffer(transformed_html_src)
+                });
+                return callback(null, transformed_file);
+              });
             }
           });
         } else if (file.extname === '.ejs') {
-          parse_ejs(file, function(err, transformed_ejs_file) {
+          resolve_file_path(file, function(err, resolved_file_path) {
             if (err !== null) {
               error.status = 404;
               next(error);
               return callback(new Error(err), file);
             } else {
-              return callback(null, transformed_ejs_file);
+              parse_html(file, function(transformed_html_src) {
+                transformed_ejs_src = transformed_html_src;
+                Object.keys(EJS_TAGS).forEach(function(key) {
+                  transformed_ejs_src = transformed_ejs_src.replace(EJS_TAGS[key], key);
+                });
+                transformed_file = new Vfile({
+                  cwd: "",
+                  base: "",
+                  path: resolved_file_path,
+                  contents: new Buffer(transformed_ejs_src)
+                });
+                return callback(null, transformed_file);
+              });
             }
           });
         }
