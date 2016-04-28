@@ -59,7 +59,7 @@ html: `<tagname>`
     
 html-example: `<br>`
 
-**4.void tag with attributes**
+**5.void tag with attributes**
 
 bracks: `tagname(list of all attributes and their values)]`
     
@@ -69,7 +69,7 @@ html: `<tagname list of all attributes and their values>`
     
 html-example: `<meta charset="UTF-8">`
 
-**5. end tag**
+**6. end tag**
   
 bracks: `]tagname`
     
@@ -79,7 +79,7 @@ html: `</tagname>`
     
 html-example: `</div>`
 
-**6. escape character**
+**7. escape character**
 
 In order to escape a character or a word, just put `\` before or after the character or the word that is supposed to be escaped. It means, first insert it before the character. If it didn't work, insert it after the character.
 
