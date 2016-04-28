@@ -176,6 +176,10 @@ So, something like the following will do the job for you.
 var express = require('express');
 var bracks_parser = require('bracks-parser');
 
+// if you run the app from your project root directory,
+// and `bracks` directory is under your project root directory, 
+// the path to `bracks` directory can be also set like 
+// var path_to_bracks_directory = './bracks';
 var path_to_bracks_directory = '/absolute/path/to/bracks';
 
 var app = express();
