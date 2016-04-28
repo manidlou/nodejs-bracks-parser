@@ -1,7 +1,7 @@
 #bracks-parser
 
 #####Introduction
-`bracks` (short for brackets) is a simpler and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
+`bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
 
 #####Install `bracks-parser` for use as an express middleware
 Please use `npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency.
@@ -10,7 +10,7 @@ Please use `npm install bracks-parser`, or `npm install bracks-parser --save-dev
 #####Performance
 Here is what happens under the hood:
 
-The parser gets all source files under given `bracks` directory as a stream of [vinyl](https://github.com/gulpjs/vinyl) file objects and pipes them [through2](https://github.com/rvagg/through2) transform function, parses them all, pipes the result documents to their destination under project root directory. In case of [express](http://expressjs.com) application, it calls the `next` middleware on `end` event.
+The parser gets all source files under given `bracks` directory as a stream of [vinyl](https://github.com/gulpjs/vinyl) file objects, pipes them [through2](https://github.com/rvagg/through2) transform function, parses them all, and pipes the result documents to their destination under project root directory. In case of [express](http://expressjs.com) application, it calls the `next` middleware on `end` event.
 #####Rationale
 I've always found `<` and `>` so annoying and tedious in writing [html](https://www.w3.org/TR/html5). For one complete element we have to insert four of `<`, `>`. The argument is that inserting `<` and `>` decreases the speed and distrupts the flow of writing html code. Primarily, in a usual case inserting `<` and `>` requires a second key, usually the shift-key or another key, to be triggered. Honestly, how many times you meant to type `<` but the output was `,`! It happened to me a lot. Furthermore, cleaner code, it means the code that is easier for eyes to track and distinguish various characters without falling into momentary confusion, leads to the code that is easier to read and also is less-error-prone. `bracks` gives us the ability to write our html with less tediousness because we no longer need to insert `<` and `>` each time for each tag name. As long as we follow a few simple agreements, we write html without any angle brackets because `bracks-parser` will add them for us.
 
