@@ -363,6 +363,109 @@ const EJS_TAGS = {
 };
 
 /**
+ * parse 'bracks' style html document. If no error found,
+ * return the transformed regular html document.
+ *
+ * @param {Object} [file] a vinyl file object
+ * @return {Function} [callback] callback function containing either error or transformed file
+ * @private
+ */
+function parse_html(file, callback) {
+  var i, split_path, resolved_file_path, transformed_file;
+  var src = file.contents.toString();
+
+  src = src.replace(/(?:\]\/\bc\b)/g, '-->');
+  src = src.replace(/(?:\bc\b\/\[)/g, '<!--');
+  Object.keys(VOID_TAGS_WITHOUT_ATTR).forEach(function(key) {
+    src = src.replace(VOID_TAGS_WITHOUT_ATTR[key], key);
+  });
+  Object.keys(END_TAGS).forEach(function(key) {
+    src = src.replace(END_TAGS[key], key);
+  });
+  Object.keys(START_TAGS_WITHOUT_ATTR).forEach(function(key) {
+    src = src.replace(START_TAGS_WITHOUT_ATTR[key], key);
+  });
+  Object.keys(START_VOID_TAGS_WITH_ATTR).forEach(function(key) {
+    src = src.replace(START_VOID_TAGS_WITH_ATTR[key], key);
+  });
+  src = src.replace(/(?:\)\[)|(?:\)\])/g, '>');
+  src = src.replace(/(?:\\)/g, '');
+  src = src.replace(/(?:> <)/g, '><');
+
+  resolved_file_path = '';
+  split_path = (file.path).split('/');
+  if (split_path.indexOf('bracks') === -1) {
+    return callback('bracks-parser error -> path to \'bracks\' directory cannot be null.', file);
+  } else {
+    split_path.splice(split_path.indexOf('bracks'), 1);
+    for (i = 0; i < split_path.length; i += 1) {
+      resolved_file_path += split_path[i] + '/';
+    }
+    resolved_file_path = resolved_file_path.slice(0, resolved_file_path.length - 1);
+    transformed_file = new Vfile({
+      cwd: "",
+      base: "",
+      path: resolved_file_path,
+      contents: new Buffer(src)
+    });
+    return callback(null, transformed_file);
+  }
+}
+
+/**
+ * parse 'bracks' style ejs document. If no error found, 
+ * return the transformed regular ejs document.
+ *
+ * @param {Object} [file] a vinyl file object
+ * @return {Function} [callback] callback function containing either error or transformed file
+ * @private
+ */
+function parse_ejs(file, callback) {
+  var i, split_path, resolved_file_path, transformed_file;
+  var src = file.contents.toString();
+  
+  src = src.replace(/(?:\]\/\bc\b)/g, '-->');
+  src = src.replace(/(?:\bc\b\/\[)/g, '<!--');
+  Object.keys(VOID_TAGS_WITHOUT_ATTR).forEach(function(key) {
+    src = src.replace(VOID_TAGS_WITHOUT_ATTR[key], key);
+  });
+  Object.keys(END_TAGS).forEach(function(key) {
+    src = src.replace(END_TAGS[key], key);
+  });
+  Object.keys(START_TAGS_WITHOUT_ATTR).forEach(function(key) {
+    src = src.replace(START_TAGS_WITHOUT_ATTR[key], key);
+  });
+  Object.keys(START_VOID_TAGS_WITH_ATTR).forEach(function(key) {
+    src = src.replace(START_VOID_TAGS_WITH_ATTR[key], key);
+  });
+  Object.keys(EJS_TAGS).forEach(function(key) {
+    src = src.replace(EJS_TAGS[key], key);
+  });
+  src = src.replace(/(?:\)\[)|(?:\)\])/g, '>');
+  src = src.replace(/(?:\\)/g, '');
+  src = src.replace(/(?:> <)/g, '><');
+
+  resolved_file_path = '';
+  split_path = (file.path).split('/');
+  if (split_path.indexOf('bracks') === -1) {
+    return callback('bracks-parser error -> path to \'bracks\' directory cannot be null.', file);
+  } else {
+    split_path.splice(split_path.indexOf('bracks'), 1);
+    for (i = 0; i < split_path.length; i += 1) {
+      resolved_file_path += split_path[i] + '/';
+    }
+    resolved_file_path = resolved_file_path.slice(0, resolved_file_path.length - 1);
+    transformed_file = new Vfile({
+      cwd: "",
+      base: "",
+      path: resolved_file_path,
+      contents: new Buffer(src)
+    });
+    return callback(null, transformed_file);
+  }
+}
+
+/**
  * bracks-parser express middleware main function
  *
  * get source files as vinyl file objects under 'bracks' directory. 
@@ -378,55 +481,35 @@ const EJS_TAGS = {
 
 function bracks_parser(bracks_src_path) {
   return function bracks_parser(req, res, next) {
-    var i, split_path, resolved_file_path, src, transformed_file, error;
+    var error = {};
+
     vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
       .pipe(thru.obj(function(file, enc, callback) {
         if (file.isNull()) {
-          error = new Error('bracks-parser error -> input file is null');
+          error.status = 404;
           next(error);
-          callback();
+          callback(new Error('bracks-parser error -> input file is null'), file);
         }
-        src = file.contents.toString();
-        src = src.replace(/(?:\]\bc\b)/g, '-->');
-        src = src.replace(/(?:\bc\b\[)/g, '<!--');
-        Object.keys(VOID_TAGS_WITHOUT_ATTR).forEach(function(key) {
-          src = src.replace(VOID_TAGS_WITHOUT_ATTR[key], key);
-        });
-        Object.keys(END_TAGS).forEach(function(key) {
-          src = src.replace(END_TAGS[key], key);
-        });
-        Object.keys(START_TAGS_WITHOUT_ATTR).forEach(function(key) {
-          src = src.replace(START_TAGS_WITHOUT_ATTR[key], key);
-        });
-        Object.keys(START_VOID_TAGS_WITH_ATTR).forEach(function(key) {
-          src = src.replace(START_VOID_TAGS_WITH_ATTR[key], key);
-        });
-        Object.keys(EJS_TAGS).forEach(function(key) {
-          src = src.replace(EJS_TAGS[key], key);
-        });
-        src = src.replace(/(?:\)\[)|(?:\)\])/g, '>');
-        src = src.replace(/(?:\\)/g, '');
-        src = src.replace(/(?:> <)/g, '><');
-
-        resolved_file_path = '';
-        split_path = (file.path).split('/');
-        if (split_path.indexOf('bracks') === -1) {
-          error = new Error('bracks-parser error -> absolute path to \'bracks\' dir cannot be null.');
-          next(error);
-          return callback(error, file);
-        } else {
-          split_path.splice(split_path.indexOf('bracks'), 1);
-          for (i = 0; i < split_path.length; i += 1) {
-            resolved_file_path += split_path[i] + '/';
-          }
-          resolved_file_path = resolved_file_path.slice(0, resolved_file_path.length - 1);
-          transformed_file = new Vfile({
-            cwd: "",
-            base: "",
-            path: resolved_file_path,
-            contents: new Buffer(src)
+        if (file.extname === '.html') {
+          parse_html(file, function(err, transformed_html_file) {
+            if (err !== null) {
+              error.status = 404;
+              next(error);
+              return callback(new Error(err), file);
+            } else {
+              return callback(null, transformed_html_file);
+            }
           });
-          return callback(null, transformed_file);
+        } else if (file.extname === '.ejs') {
+          parse_ejs(file, function(err, transformed_ejs_file) {
+            if (err !== null) {
+              error.status = 404;
+              next(error);
+              return callback(new Error(err), file);
+            } else {
+              return callback(null, transformed_ejs_file);
+            }
+          });
         }
       })).pipe(vfs.dest('./'))
     .on('end', function() {

@@ -26,9 +26,17 @@ Since html document structure relies on start and end tags, we still need an ide
 
 **1. comments**
 
-bracks comment: `c[your helpful comment]c`
+bracks comment starting tag: `c/[`
+
+bracks comment ending tag: `]/c`
+
+html comment starting tag: `<!--`
   
-html comment: `<!--your helpful comment-->`
+html comment ending tag: `-->`
+
+bracks comment example: `c/[your valuable comment]/c`
+
+html comment example: `<!--your valuable comment-->`
 
 **2. start tag without attributes**
 
@@ -125,7 +133,7 @@ That's it. As long as you follow these simple and relatively intuitive agreement
 ```
 <!DOCTYPE html>
 html[
-  c[your comment]c
+  c/[your comment]/c
   head[title[your page title]title]head
   body[
     h1[explore your mind]h1
@@ -169,7 +177,7 @@ html[
 ]html
 ```
 #####How to use with express
-If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located inside sub-direcories. It doesn't matter. The `bracks-parser` will find them and pipes them to their destinations under project root directory, after parses them all to html or ejs. In fact, the file extension doesn't matter for the parser. Either `.html` or `.ejs`, it parses the files under `bracks` directory based on the `bracks` syntax and pipes the result files with their own extensions to their destinations.
+If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located inside sub-direcories. It doesn't matter. The `bracks-parser` will find them and pipes them to their destinations under project root directory, after parses them all to html or ejs. In fact, the file extension doesn't matter for the parser. Either `.html` or `.ejs`, it parses the files under `bracks` directory based on the `bracks` syntax and pipes the result files with their own extensions to their destinations.
 
 So, something like the following will do the job for you.
 
@@ -231,7 +239,7 @@ bracks
 
 As we run our app, `bracks-parser` reads all the files under `bracks` directory. If it finds any errors, it passes the control to the next middleware by passing that error as an argument. If it doesn't find any errors, it parses all the files and pipes them all with clean and complete html or ejs format to the project root directory. In other words, it parses them all and makes them ready for express to render them. So it means as we write our application and progress, our updated (correct html or ejs formatted) files are dynamically being overwritten whenever we change `bracks` files.
 
-Just as a reminder, since `bracks-parser` is basically a development tool, when you are done writing in a `bracks` style and you don't need it anymore, you can just simply delete the `bracks` directory and remove the parser from the stack of middlewares in your application.
+Just as a reminder, since `bracks-parser` is basically a development tool, when you are done writing in a `bracks` style and you don't need it anymore, if you want, you can just simply delete the `bracks` directory, remove the parser from the stack of middlewares in your application, and uninstall `bracks-parser`.
 
 So, it is nothing crazy about this. Everything is as usual. We just write our view files `bracks` style, which hopefully gives us the ability to write html and/or ejs simpler, faster with less tediousness.
 
