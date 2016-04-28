@@ -23,6 +23,7 @@ Since html document structure relies on start and end tags, we still need an ide
 
 ######Important Notice: `bracks` is `not` a whitespace sensitive syntax. Also, `bracks-parser` doesn't care about whitespace before the first character of each line. In other words, it doesn't touch the indentation of the source file. The indentation of the final result is going to be the same as the source file. If the following simple agreements are maintained throughtout the entire code, you are going to receive your code in a clean and correct format.
 
+
 **1. comments**
 
 bracks comment: `c[your helpful comment]c`
