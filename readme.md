@@ -7,6 +7,8 @@
 Please use `npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency.
 #####Use as a gulp plugin
 `bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
+#####Use as a command line program
+`bracks-parser` can be used as a command line program as well. If you are interested about that, please read [bracks](https://github.com/mawni/nodejs-bracks-cli).
 #####Performance
 Here is what happens under the hood:
 
@@ -21,7 +23,7 @@ Of course, any help, idea, criticism would be all absolutely appreciated.
 #####`bracks` simple syntax
 Since html document structure relies on start and end tags, we still need an identifier to distinguish them from the rest of the text. `bracks` uses `[]` and `()` as the main identifiers. Simply for a normal element, all attributes and their values are placed in `()`, and all the contents of the element are placed in `[]`. Here is how we can use `bracks`:
 
-######Important Notice: `bracks` is `not` a whitespace sensitive syntax. Also, `bracks-parser` doesn't care about whitespace before the first character of each line. In other words, it doesn't touch the indentation of the source file. The indentation of the final result is going to be the same as the source file. If the following simple agreements are maintained throughtout the entire code, you are going to receive your code in a clean and correct format.
+**Important Notice**: `bracks` is **not** a whitespace sensitive syntax. Also, `bracks-parser` doesn't care about whitespace before the first character of each line. In other words, it doesn't touch the indentation of the source file. The indentation of the final result is going to be the same as the source file. If the following simple agreements are maintained throughtout the entire code, you are going to receive your code in a clean and correct format.
 
 
 **1. comments**
@@ -70,9 +72,9 @@ html-example: `<br>`
 
 **5.void tag with attributes**
 
-bracks: `tagname(list of all attributes and their values)]`
+bracks: `tagname(list of all attributes and their values)]]`
     
-bracks-example: `meta(charset="UTF-8")]`
+bracks-example: `meta(charset="UTF-8")]]`
 
 html: `<tagname list of all attributes and their values>`
     
@@ -143,6 +145,7 @@ html[
       ul(style="list-style-type:disc")[
         li[item1]li
         li[item2]li
+        li[a(href="https://www.google.com")[link to google]a]li
       ]ul
     ]div
     div[
@@ -158,8 +161,8 @@ html[
 html[
   head[
     title[your page title]title
-    link(rel="stylesheet" href="/stylesheets/style.css")]
-    meta(charset="utf-8")]
+    link(rel="stylesheet" href="/stylesheets/style.css")]]
+    meta(charset="utf-8")]]
   ]head
   body(class="%= page %]")[
     [% include partials/template/header.ejs %]
@@ -177,7 +180,7 @@ html[
 ]html
 ```
 #####How to use with express
-If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located inside sub-direcories. It doesn't matter. The `bracks-parser` will find them and pipes them to their destinations under project root directory, after parses them all to html or ejs. In fact, the file extension doesn't matter for the parser. Either `.html` or `.ejs`, it parses the files under `bracks` directory based on the `bracks` syntax and pipes the result files with their own extensions to their destinations.
+If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located inside sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory. In fact, the file extension doesn't matter for the parser. Either `.html` or `.ejs`, it parses the files under `bracks` directory based on the `bracks` syntax and pipes the result files with their own extensions to their destinations.
 
 So, something like the following will do the job for you.
 
