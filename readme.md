@@ -25,7 +25,6 @@ Since html document structure relies on start and end tags, we still need an ide
 
 **Important Notice**: `bracks` is **not** a whitespace sensitive syntax. Also, `bracks-parser` doesn't care about whitespace before the first character of each line. In other words, it doesn't touch the indentation of the source file. The indentation of the final result is going to be the same as the source file. If the following simple agreements are maintained throughtout the entire code, you are going to receive your code in a clean and correct format.
 
-
 **1. comments**
 
 bracks comment starting tag: `c/[`
@@ -60,7 +59,7 @@ html: `<tagname list of all attributes and their values>`
     
 html-example: `<div id="yourDivId" class="yourdivclass">`
 
-**4.void tag without attributes**
+**4. void tag without attributes**
 
 bracks: `[tagname]`
     
@@ -70,7 +69,7 @@ html: `<tagname>`
     
 html-example: `<br>`
 
-**5.void tag with attributes**
+**5. void tag with attributes**
 
 bracks: `tagname(list of all attributes and their values)/]`
     
