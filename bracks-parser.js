@@ -448,7 +448,7 @@ function bracks_parser(bracks_src_path) {
         if (file.isNull()) {
           error.status = 404;
           next(error);
-          callback(new Error('bracks-parser error -> input file is null'), file);
+          return callback(new Error('bracks-parser error -> input file is null'), file);
         }
         if (file.extname === '.html') {
           resolve_file_path(file, function(err, resolved_file_path) {
