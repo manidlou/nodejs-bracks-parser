@@ -419,7 +419,7 @@ function parse_html(file, callback) {
   Object.keys(START_VOID_TAGS_WITH_ATTR).forEach(function(key) {
     src = src.replace(START_VOID_TAGS_WITH_ATTR[key], key);
   });
-  src = src.replace(/(?:\)\[)|(?:\)\]\])/g, '>');
+  src = src.replace(/(?:\)\[)|(?:\)\/\])/g, '>');
   src = src.replace(/(?:\\)/g, '');
   src = src.replace(/(?:> <)/g, '><');
   return callback(src);

@@ -72,9 +72,9 @@ html-example: `<br>`
 
 **5.void tag with attributes**
 
-bracks: `tagname(list of all attributes and their values)]]`
+bracks: `tagname(list of all attributes and their values)/]`
     
-bracks-example: `meta(charset="UTF-8")]]`
+bracks-example: `meta(charset="UTF-8")/]`
 
 html: `<tagname list of all attributes and their values>`
     
@@ -161,8 +161,8 @@ html[
 html[
   head[
     title[your page title]title
-    link(rel="stylesheet" href="/stylesheets/style.css")]]
-    meta(charset="utf-8")]]
+    link(rel="stylesheet" href="/stylesheets/style.css")/]
+    meta(charset="utf-8")/]
   ]head
   body(class="%= page %]")[
     [% include partials/template/header.ejs %]
