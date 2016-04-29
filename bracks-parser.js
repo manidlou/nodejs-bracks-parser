@@ -446,14 +446,14 @@ function bracks_parser(bracks_src_path) {
     vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
       .pipe(thru.obj(function(file, enc, callback) {
         if (file.isNull()) {
-        	error = new Error('bracks-parser error -> input file is null');
+          error = new Error('bracks-parser error -> input file is null');
           next(error);
           return callback(new Error('bracks-parser error -> input file is null'), file);
         }
         if (file.extname === '.html') {
           resolve_file_path(file, function(err, resolved_file_path) {
             if (err !== null) {
-            	error = new Error(err);
+              error = new Error(err);
               next(error);
               return callback(new Error(err), file);
             } else {
@@ -471,7 +471,7 @@ function bracks_parser(bracks_src_path) {
         } else if (file.extname === '.ejs') {
           resolve_file_path(file, function(err, resolved_file_path) {
             if (err !== null) {
-            	error = new Error(err);
+              error = new Error(err);
               next(error);
               return callback(new Error(err), file);
             } else {
