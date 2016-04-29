@@ -421,7 +421,6 @@ function parse_html(file, callback) {
   });
   src = src.replace(/(?:\)\[)|(?:\)\/\])/g, '>');
   src = src.replace(/(?:\\)/g, '');
-  src = src.replace(/(?:> <)/g, '><');
   return callback(src);
 }
 
