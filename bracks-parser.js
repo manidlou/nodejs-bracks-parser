@@ -441,7 +441,7 @@ function parse_html(file, callback) {
 
 function bracks_parser(bracks_src_path) {
   return function bracks_parser(req, res, next) {
-    var transformed_ejs_src, transformed_file;
+    var transformed_file, transformed_ejs_src;
     var error = {};
     vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
       .pipe(thru.obj(function(file, enc, callback) {
