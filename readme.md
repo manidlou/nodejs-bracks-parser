@@ -250,5 +250,5 @@ So, it is nothing crazy about this. Everything is as usual. We just write our vi
 
 [npm-image]: https://img.shields.io/npm/v/bracks-parser.svg
 [npm-url]: https://npmjs.org/package/bracks-parser
-[downloads-image]: https://img.shields.io/npm/dt/bracks-parser.svg
+[downloads-image]: https://img.shields.io/npm/dm/bracks-parser.svg
 [downloads-url]: https://npmjs.org/package/bracks-parser
