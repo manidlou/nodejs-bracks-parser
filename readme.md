@@ -1,5 +1,8 @@
 #bracks-parser
 
+[![npm](https://img.shields.io/npm/v/bracks-parser.svg?maxAge=2592000)]() 
+[![npm](https://img.shields.io/npm/dt/bracks-parser.svg?maxAge=2592000)]() 
+
 #####Introduction
 `bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
 
@@ -8,7 +11,7 @@ Please use `npm install bracks-parser`, or `npm install bracks-parser --save-dev
 #####Use as a gulp plugin
 `bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
 #####Use as a command line program
-`bracks-parser` can be used as a command line program as well. If you are interested about that, please read [bracks](https://github.com/mawni/nodejs-bracks-cli).
+`bracks-parser` can be used as a command line tool as well. If you are interested about that, please read [bracks-cli](https://github.com/mawni/nodejs-bracks-cli).
 #####Performance
 Here is what happens under the hood:
 
