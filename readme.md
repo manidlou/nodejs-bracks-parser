@@ -1,7 +1,6 @@
 #bracks-parser
 
-[![npm](https://img.shields.io/npm/v/bracks-parser.svg?maxAge=2592000)]() 
-[![npm](https://img.shields.io/npm/dt/bracks-parser.svg?maxAge=2592000)]() 
+[![NPM Version][npm-image]][npm-url] [![NPM Downloads][downloads-image]][downloads-url] 
 
 #####Introduction
 `bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
@@ -248,3 +247,8 @@ Just as a reminder, since `bracks-parser` is basically a development tool, when 
 
 So, it is nothing crazy about this. Everything is as usual. We just write our view files `bracks` style, which hopefully gives us the ability to write html and/or ejs simpler, faster with less tediousness.
 
+
+[npm-image]: https://img.shields.io/npm/v/bracks-parser.svg
+[npm-url]: https://npmjs.org/package/bracks-parser
+[downloads-image]: https://img.shields.io/npm/dt/bracks-parser.svg
+[downloads-url]: https://npmjs.org/package/bracks-parser
