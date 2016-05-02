@@ -6,7 +6,7 @@
   "scripts": {
     "npm preinstall": "npm install --save-dev",
     "npm pretest": "node ./test/server.js",
-    "npm test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
     "through2": "^2.0.1",
