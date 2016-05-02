@@ -467,7 +467,7 @@ function bracks_parser(bracks_src_path) {
           return callback(new Error('bracks-parser error -> input file is null'), file);
         }
         if (file.extname === '.html') {
-          resolve_file_path(file, function(err, resolved_file_path) {
+          resolve_file_path(file, function(err, resolved_path) {
             if (err !== null) {
               error = new Error(err);
               next(error);
@@ -477,7 +477,7 @@ function bracks_parser(bracks_src_path) {
                 transformed_file = new Vfile({
                   cwd: "",
                   base: "",
-                  path: resolved_file_path,
+                  path: resolved_path,
                   contents: new Buffer(transformed_html_src)
                 });
                 return callback(null, transformed_file);
@@ -485,7 +485,7 @@ function bracks_parser(bracks_src_path) {
             }
           });
         } else if (file.extname === '.ejs') {
-          resolve_file_path(file, function(err, resolved_file_path) {
+          resolve_file_path(file, function(err, resolved_path) {
             if (err !== null) {
               error = new Error(err);
               next(error);
@@ -499,7 +499,61 @@ function bracks_parser(bracks_src_path) {
                 transformed_file = new Vfile({
                   cwd: "",
                   base: "",
-                  path: resolved_file_path,
+                  path: resolved_path,
+                  contents: new Buffer(transformed_ejs_src)
+                });
+                return callback(null, transformed_file);
+              });
+            }
+          });
+        }
+      })).pipe(vfs.dest('./'))
+    .on('end', function() {
+      next();
+    });
+  };
+}
+
+function bracks_parser_tester(bracks_src_path) {
+    var transformed_file, transformed_ejs_src, error;
+    vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
+      .pipe(thru.obj(function(file, enc, callback) {
+        if (file.isNull()) {
+          error = new Error('bracks-parser error -> input file is null');
+          return callback(new Error('bracks-parser error -> input file is null'), file);
+        }
+        if (file.extname === '.html') {
+          resolve_file_path(file, function(err, resolved_path) {
+            if (err !== null) {
+              error = new Error(err);
+              return callback(new Error(err), file);
+            } else {
+              parse_html(file, function(transformed_html_src) {
+                transformed_file = new Vfile({
+                  cwd: "",
+                  base: "",
+                  path: resolved_path,
+                  contents: new Buffer(transformed_html_src)
+                });
+                return callback(null, transformed_file);
+              });
+            }
+          });
+        } else if (file.extname === '.ejs') {
+          resolve_file_path(file, function(err, resolved_path) {
+            if (err !== null) {
+              error = new Error(err);
+              return callback(new Error(err), file);
+            } else {
+              parse_html(file, function(transformed_html_src) {
+                transformed_ejs_src = transformed_html_src;
+                Object.keys(EJS_TAGS).forEach(function(key) {
+                  transformed_ejs_src = transformed_ejs_src.replace(EJS_TAGS[key], key);
+                });
+                transformed_file = new Vfile({
+                  cwd: "",
+                  base: "",
+                  path: resolved_path,
                   contents: new Buffer(transformed_ejs_src)
                 });
                 return callback(null, transformed_file);
@@ -515,3 +569,4 @@ function bracks_parser(bracks_src_path) {
 }
 
 module.exports = bracks_parser;
+module.exports = bracks_parser_tester;

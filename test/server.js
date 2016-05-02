@@ -20,5 +20,5 @@ app.get('/testhtml', function(req, res, next) {
 });
 
 app.get('/testejs', function(req, res, next) {
-  fs.createReadStream('/home/travis/build/mawni/nodejs-bracks-parser/views/index-ejs.ejs', 'utf8').pipe(res);
+  
 });
