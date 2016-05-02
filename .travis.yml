@@ -3,7 +3,7 @@ node_js:
   - "6.0.0"
 
 before_script:
-  - npm preinstall
+  - npm install --save-dev
   - npm pretest
 script:
 	- npm test
