@@ -1,9 +1,4 @@
 language: node_js
 node_js:
   - "6.0.0"
-
-before_install:
-  - npm install --save-dev
-
-install:
-  - npm test
+script: "npm run-script test-travis"
