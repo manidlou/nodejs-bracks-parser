@@ -4,6 +4,7 @@
   "description": "An alternative style of writing html and ejs without using angle brackets for elements",
   "main": "bracks-parser.js",
   "scripts": {
+    "npm start": "node ./test/server.js",
     "npm test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
   "homepage": "https://github.com/mawni/nodejs-bracks-parser#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "express": "^4.13.4",
     "mocha": "^2.4.5",
     "request": "^2.72.0"
   }
