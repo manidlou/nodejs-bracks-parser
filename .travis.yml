@@ -4,7 +4,7 @@ node_js:
 
 before_install:
   - npm install --save-dev
-  - node ./test/server.js
+  - npm start
 
 install:
   - npm test
