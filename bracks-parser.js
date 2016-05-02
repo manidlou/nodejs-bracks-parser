@@ -397,7 +397,7 @@ const EJS_TAGS = {
  */
 
 function resolve_file_path(file, callback) {
-  var resolved_file_path = '';
+  var resolved_path = '';
   var split_path = (file.path).split('/');
   var i;
   if (split_path.indexOf('bracks') === -1) {
@@ -405,10 +405,10 @@ function resolve_file_path(file, callback) {
   } else {
     split_path.splice(split_path.indexOf('bracks'), 1);
     for (i = 0; i < split_path.length; i += 1) {
-      resolved_file_path += split_path[i] + '/';
+      resolved_path += split_path[i] + '/';
     }
-    resolved_file_path = resolved_file_path.slice(0, resolved_file_path.length - 1);
-    return callback(null, resolved_file_path);
+    resolved_path = resolved_path.slice(0, resolved_path.length - 1);
+    return callback(null, resolved_path);
   }
 }
 
