@@ -4,5 +4,7 @@ node_js:
 
 before_install:
   - npm install --save-dev
-script:
-	- npm test
+  - npm pretest
+
+install:
+  - npm test
