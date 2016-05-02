@@ -2,8 +2,7 @@ language: node_js
 node_js:
   - "6.0.0"
 
-before_script:
+before_install:
   - npm install --save-dev
-  - npm pretest
 script:
 	- npm test
