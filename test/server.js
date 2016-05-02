@@ -16,11 +16,9 @@ app.set('view engine', 'ejs');
 app.use(bracks_parser('./bracks'));
 
 app.get('/testhtml', function(req, res, next) {
-  fs.createReadStream('./views/index-html.html'), 'utf8')
-    .pipe(res);
+  fs.createReadStream(path.join(process.cwd(), 'views', 'index-html.html'), 'utf8').pipe(res);
 });
 
 app.get('/testejs', function(req, res, next) {
-  fs.createReadStream('./views/index-ejs.ejs'), 'utf8')
-    .pipe(res);
+  fs.createReadStream(path.join(process.cwd(), 'views', 'index-ejs.ejs'), 'utf8').pipe(res);
 });
