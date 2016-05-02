@@ -4,7 +4,8 @@
   "description": "An alternative style of writing html and ejs without using angle brackets for elements",
   "main": "bracks-parser.js",
   "scripts": {
-    "npm start": "node ./test/server.js",
+    "npm preinstall": "npm install --save-dev",
+    "npm pretest": "node ./test/server.js",
     "npm test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
