@@ -1,27 +1,3 @@
-/*!
- * bracks-parser
- * This software is released under the MIT license:
- * 
- * Copyright (c) <2016> <Mawni Maghsoudlou>
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- * the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
 'use strict';
 
 /**
@@ -442,76 +418,55 @@ function parse_html(file, callback) {
   return callback(src);
 }
 
-/**
- * bracks-parser express middleware main function
- *
- * get source files (html or ejs) as vinyl file objects under 'bracks' directory. 
- * Pipe them through2 stream transform function, parse them all, pipe 
- * the result documents to the project root directory, and call 
- * the next middleware. If find any errors, call the next middleware 
- * and pass the error as the argument.
- *
- * @param {String} [bracks_src_path] absolute path to `bracks` directory
- * @return {Function}
- * @public
- */
-
-function bracks_parser(bracks_src_path) {
-  return function bracks_parser(req, res, next) {
-    var transformed_file, transformed_ejs_src, error;
-    vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
-      .pipe(thru.obj(function(file, enc, callback) {
-        if (file.isNull()) {
-          error = new Error('bracks-parser error -> input file is null');
-          next(error);
-          return callback(new Error('bracks-parser error -> input file is null'), file);
-        }
-        if (file.extname === '.html') {
-          resolve_file_path(file, function(err, resolved_path) {
-            if (err !== null) {
-              error = new Error(err);
-              next(error);
-              return callback(new Error(err), file);
-            } else {
-              parse_html(file, function(transformed_html_src) {
-                transformed_file = new Vfile({
-                  cwd: "",
-                  base: "",
-                  path: resolved_path,
-                  contents: new Buffer(transformed_html_src)
-                });
-                return callback(null, transformed_file);
+module.exports = function(bracks_src_path, callback) {
+  var transformed_file, transformed_ejs_src, error;
+  vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
+    .pipe(thru.obj(function(file, enc, callback) {
+      if (file.isNull()) {
+        error = new Error('bracks-parser error -> input file is null');
+        return callback(new Error('bracks-parser error -> input file is null'), file);
+      }
+      if (file.extname === '.html') {
+        resolve_file_path(file, function(err, resolved_path) {
+          if (err !== null) {
+            error = new Error(err);
+            return callback(new Error(err), file);
+          } else {
+            parse_html(file, function(transformed_html_src) {
+              transformed_file = new Vfile({
+                cwd: "",
+                base: "",
+                path: resolved_path,
+                contents: new Buffer(transformed_html_src)
               });
-            }
-          });
-        } else if (file.extname === '.ejs') {
-          resolve_file_path(file, function(err, resolved_path) {
-            if (err !== null) {
-              error = new Error(err);
-              next(error);
-              return callback(new Error(err), file);
-            } else {
-              parse_html(file, function(transformed_html_src) {
-                transformed_ejs_src = transformed_html_src;
-                Object.keys(EJS_TAGS).forEach(function(key) {
-                  transformed_ejs_src = transformed_ejs_src.replace(EJS_TAGS[key], key);
-                });
-                transformed_file = new Vfile({
-                  cwd: "",
-                  base: "",
-                  path: resolved_path,
-                  contents: new Buffer(transformed_ejs_src)
-                });
-                return callback(null, transformed_file);
+              return callback(null, transformed_file);
+            });
+          }
+        });
+      } else if (file.extname === '.ejs') {
+        resolve_file_path(file, function(err, resolved_path) {
+          if (err !== null) {
+            error = new Error(err);
+            return callback(new Error(err), file);
+          } else {
+            parse_html(file, function(transformed_html_src) {
+              transformed_ejs_src = transformed_html_src;
+              Object.keys(EJS_TAGS).forEach(function(key) {
+                transformed_ejs_src = transformed_ejs_src.replace(EJS_TAGS[key], key);
               });
-            }
-          });
-        }
-      })).pipe(vfs.dest('./'))
-    .on('end', function() {
-      next();
-    });
-  };
-}
-
-module.exports = bracks_parser;
+              transformed_file = new Vfile({
+                cwd: "",
+                base: "",
+                path: resolved_path,
+                contents: new Buffer(transformed_ejs_src)
+              });
+              return callback(null, transformed_file);
+            });
+          }
+        });
+      }
+    })).pipe(vfs.dest('./'))
+  .on('end', function() {
+    return callback(null, true);
+  });
+};
