@@ -3,6 +3,5 @@ node_js:
   - "6.0.0"
 before_install:
   - npm install -g mocha
-  - npm install --save-dev
 script:
   - npm test
