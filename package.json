@@ -3,10 +3,14 @@
   "version": "4.1.10",
   "description": "An alternative style of writing html and ejs without using angle brackets for elements",
   "main": "bracks-parser.js",
+  "bin": {
+    "bracks": "./bracks-parser.js"
+  },
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js"
   },
   "dependencies": {
+    "node-watch": "^0.3.5",
     "through2": "^2.0.1",
     "vinyl": "^1.1.1",
     "vinyl-fs": "^2.4.3"

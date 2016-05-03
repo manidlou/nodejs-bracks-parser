@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /*!
  * bracks-parser
  * This software is released under the MIT license:
@@ -33,6 +35,8 @@ const path = require('path');
 const Vfile = require('vinyl');
 const vfs = require('vinyl-fs');
 const thru = require('through2');
+const watch = require('node-watch');
+const package_file = require('./package.json');
 
 /**
  * end tags regular expressions object mapping
@@ -388,31 +392,6 @@ const EJS_TAGS = {
 };
 
 /**
- * resolve parsed file path
- *
- * @param {Object} [file] a vinyl file object
- * @param {Function} [callback] a callback function
- * @return {Function} callback function containing either an error or the resolved file path
- * @private
- */
-
-function resolve_file_path(file, callback) {
-  var resolved_path = '';
-  var split_path = (file.path).split('/');
-  var i;
-  if (split_path.indexOf('bracks') === -1) {
-    return callback(new Error('bracks-parser error -> path to \'bracks\' directory cannot be null.'), file);
-  } else {
-    split_path.splice(split_path.indexOf('bracks'), 1);
-    for (i = 0; i < split_path.length; i += 1) {
-      resolved_path += split_path[i] + '/';
-    }
-    resolved_path = resolved_path.slice(0, resolved_path.length - 1);
-    return callback(null, resolved_path);
-  }
-}
-
-/**
  * parse 'bracks' style html document. return the parsed regular html document.
  *
  * @param {Object} [file] a vinyl file object
@@ -443,39 +422,177 @@ function parse_html(file, callback) {
 }
 
 /**
- * bracks-parser express middleware main function
- *
- * get source files (html or ejs) as vinyl file objects under 'bracks' directory. 
- * Pipe them through2 stream transform function, parse them all, pipe 
- * the result documents to the project root directory, and call 
- * the next middleware. If find any errors, call the next middleware 
- * and pass the error as the argument.
- *
- * @param {String} [bracks_src_path] absolute path to `bracks` directory
- * @return {Function}
- * @public
+ * bracks-parser for use as an express middleware.
  */
 
-function bracks_parser(bracks_src_path) {
-  return function bracks_parser(req, res, next) {
-    var transformed_file, transformed_ejs_src, error;
-    vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
+(function() {
+
+  /**
+   * resolve parsed file path
+   *
+   * @param {Object} [file] a vinyl file object
+   * @param {Function} [callback] a callback function
+   * @return {Function} callback function containing either an error or the resolved file path
+   * @private
+   */
+
+  function resolve_file_path(file, callback) {
+    var resolved_path = '';
+    var split_path = (file.path).split('/');
+    var i;
+    if (split_path.indexOf('bracks') === -1) {
+      return callback(new Error('bracks-parser error -> path to \'bracks\' directory cannot be null.'), file);
+    } else {
+      split_path.splice(split_path.indexOf('bracks'), 1);
+      for (i = 0; i < split_path.length; i += 1) {
+        resolved_path += split_path[i] + '/';
+      }
+      resolved_path = resolved_path.slice(0, resolved_path.length - 1);
+      return callback(null, resolved_path);
+    }
+  }
+
+  /**
+   * bracks-parser express middleware main function
+   *
+   * get source files (html or ejs) as vinyl file objects under 'bracks' directory. 
+   * Pipe them through2 stream transform function, parse them all, pipe 
+   * the result documents to the project root directory, and call 
+   * the next middleware. If find any errors, call the next middleware 
+   * and pass the error as the argument.
+   *
+   * @param {String} [bracks_src_path] absolute path to `bracks` directory
+   * @return {Function}
+   * @public
+   */
+  function bracks_parser(bracks_src_path) {
+    return function bracks_parser(req, res, next) {
+      var transformed_file, transformed_ejs_src;
+      vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
+        .pipe(thru.obj(function(file, enc, callback) {
+          if (file.isNull()) {
+            next(new Error('bracks-parser error -> input file is null'));
+            return callback(new Error('bracks-parser error -> input file is null'), file);
+          }
+          if (file.extname === '.html') {
+            resolve_file_path(file, function(err, resolved_path) {
+              if (err !== null) {
+                next(err);
+                return callback(err, file);
+              } else {
+                parse_html(file, function(transformed_html_src) {
+                  transformed_file = new Vfile({
+                    cwd: "",
+                    base: "",
+                    path: resolved_path,
+                    contents: new Buffer(transformed_html_src)
+                  });
+                  return callback(null, transformed_file);
+                });
+              }
+            });
+          } else if (file.extname === '.ejs') {
+            resolve_file_path(file, function(err, resolved_path) {
+              if (err !== null) {
+                next(err);
+                return callback(err, file);
+              } else {
+                parse_html(file, function(transformed_html_src) {
+                  transformed_ejs_src = transformed_html_src;
+                  Object.keys(EJS_TAGS).forEach(function(key) {
+                    transformed_ejs_src = transformed_ejs_src.replace(EJS_TAGS[key], key);
+                  });
+                  transformed_file = new Vfile({
+                    cwd: "",
+                    base: "",
+                    path: resolved_path,
+                    contents: new Buffer(transformed_ejs_src)
+                  });
+                  return callback(null, transformed_file);
+                });
+              }
+            });
+          }
+        })).pipe(vfs.dest('./'))
+      .on('end', function() {
+        next();
+      });
+    };
+  }
+  module.exports = bracks_parser;
+}());
+
+/**
+ * bracks-parser command line interface
+ * 
+ * It only run if the bin executable name matches the package bin field ('bracks').
+ * 
+ * list of options:
+ * 	-o <bracks-dir> <target-dir> (parse all files under bracks dir and pipe the results to the target dir)
+ * 	-w <bracks-dir> <target-dir> (watch the given 'bracks' dir. upon any changes, parse all files under bracks dir and pipe the results to the target dir)
+ * 	-v (show the current version of the bin executable)
+ * 	-h (show the help menu)
+ */
+
+(function() {
+  const BRACKS_COMMAND = path.basename(process.argv[1]);
+  const BRACKS_COMMAND_FLAG = process.argv[2];
+  const BRACKS_DIR = process.argv[3];
+  const TARGET_DIR = process.argv[4];
+
+  /**
+   * resolve parsed file path
+   *
+   * @param {Object} [file] a vinyl file object
+   * @param {Function} [callback] a callback function
+   * @return {Function} callback function containing either an error or the resolved file path
+   * @private
+   */
+
+  function cli_resolve_file_path(file, callback) {
+    var resolved_path = '';
+    var split_path = (file.path).split('/');
+    var parsed_path = [];
+    var i;
+    if (split_path.indexOf('bracks') === -1) {
+      return callback(new Error('bracks-parser error -> path to \'bracks\' directory cannot be null.'), file);
+    } else {
+      parsed_path = split_path.slice(split_path.indexOf('bracks') + 1, split_path.length);
+      for (i = 0; i < parsed_path.length; i += 1) {
+        resolved_path += parsed_path[i] + '/';
+      }
+      resolved_path = resolved_path.slice(0, resolved_path.length - 1);
+      return callback(null, resolved_path);
+    }
+  }
+  
+  /**
+   * parse all files under given 'bracks' directory, convert them to regular html or ejs,
+   * and pipe result documents to the given target directory. If find error,
+   * return callback function with error as the first argument, otherwise
+   * error argument will be null.
+   *
+   * @param {Function} [callback] a callback function
+   * @return {Function} callback function
+   * @private
+   */
+  function parse_files(cb) {
+    var transformed_file, transformed_ejs_src;
+    vfs.src(path.join(BRACKS_DIR, '/**/*.+(html|ejs)'))
       .pipe(thru.obj(function(file, enc, callback) {
         if (file.isNull()) {
-          next(new Error('bracks-parser error -> input file is null'));
-          return callback(new Error('bracks-parser error -> input file is null'), file);
+          return callback(new Error('bracks-parser error -> input file is null.'), file);
         }
         if (file.extname === '.html') {
-          resolve_file_path(file, function(err, resolved_path) {
+          cli_resolve_file_path(file, function(err, resolved_file_path) {
             if (err !== null) {
-              next(err);
               return callback(err, file);
             } else {
               parse_html(file, function(transformed_html_src) {
                 transformed_file = new Vfile({
                   cwd: "",
                   base: "",
-                  path: resolved_path,
+                  path: resolved_file_path,
                   contents: new Buffer(transformed_html_src)
                 });
                 return callback(null, transformed_file);
@@ -483,9 +600,8 @@ function bracks_parser(bracks_src_path) {
             }
           });
         } else if (file.extname === '.ejs') {
-          resolve_file_path(file, function(err, resolved_path) {
+          cli_resolve_file_path(file, function(err, resolved_file_path) {
             if (err !== null) {
-              next(err);
               return callback(err, file);
             } else {
               parse_html(file, function(transformed_html_src) {
@@ -496,7 +612,7 @@ function bracks_parser(bracks_src_path) {
                 transformed_file = new Vfile({
                   cwd: "",
                   base: "",
-                  path: resolved_path,
+                  path: resolved_file_path,
                   contents: new Buffer(transformed_ejs_src)
                 });
                 return callback(null, transformed_file);
@@ -504,11 +620,68 @@ function bracks_parser(bracks_src_path) {
             }
           });
         }
-      })).pipe(vfs.dest('./'))
+      })).pipe(vfs.dest(TARGET_DIR))
     .on('end', function() {
-      next();
+      return cb(null, 0);
     });
-  };
-}
+  }
 
-module.exports = bracks_parser;
+  if (BRACKS_COMMAND !== null && BRACKS_COMMAND !== undefined && BRACKS_COMMAND === 'bracks') {
+    if (BRACKS_COMMAND_FLAG === '-o') {
+      if (BRACKS_DIR === null || BRACKS_DIR === undefined ||
+          TARGET_DIR === null || TARGET_DIR === undefined) {
+        console.log('|\n--> bracks error: source and destination cannot be null. please type \'bracks -h\' to get more help.\n');
+        return;
+      } else {
+        parse_files(function(err, done) {
+          if (err !== null) {
+            console.log('|\n--> bracks error: ' + err.message + '\n');
+            return;
+          }
+          if (done === 0) {
+            console.log('|\n--> bracks finished successfully.\n');
+          }
+        });                                          
+      }
+    } else if (BRACKS_COMMAND_FLAG === '-w') {
+      if (BRACKS_DIR === null || BRACKS_DIR === undefined ||
+          TARGET_DIR === null || TARGET_DIR === undefined) {
+        console.log('|\n--> bracks error: source and destination cannot be null. please type \'bracks -h\' to get more help.\n');
+        return;
+      } else {
+        parse_files(function(err) {
+          if (err !== null) {
+            console.log('|\n--> bracks error: ' + err.message + '\n');
+            return;
+          }
+        });
+        console.log('|\n--> bracks has started watching [' + BRACKS_DIR + ']..\n');
+        watch(BRACKS_DIR, function() {
+          parse_files(function(err) {
+            if (err !== null) {
+              console.log('|\n--> bracks error: ' + err.message + '\n');
+              return;
+            }
+          });                                          
+        });
+      }
+    } else if (BRACKS_COMMAND_FLAG === '-h') {
+      console.log('|');
+      console.log('--> usage:  bracks [option] [arg1] [arg2]');
+      console.log('--> example: bracks -o /path/to/bracks/directory /path/to/target/directory\n');
+      console.log('list of options:\n');
+      console.log(' -o <path to bracks directory that contains bracks-style documents> <target directory> (parse all files under given \'bracks\' directory and pipe the result documents to the target directory)\n');
+      console.log(' -w <path to bracks directory that contains bracks-style documents> <target directory> (watch the given \'bracks\' directory. Upon any changes, parse all files under given \'bracks\' directory and pipe the result documents to the target directory)\n');
+      console.log(' -v (output the current version of the app)\n');
+      console.log(' -h (show this help menu)\n');
+      return;
+    } else if (BRACKS_COMMAND_FLAG === '-v') {
+      console.log('v' + package_file.version);
+      return;
+    } else {
+      console.log('|\n--> bracks error: command not found. please type --> \'bracks -h\' to get more help.\n');
+      return;
+    }
+  }
+}());
+

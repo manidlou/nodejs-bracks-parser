@@ -5,12 +5,15 @@
 #####Introduction
 `bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
 
-#####Install `bracks-parser` for use as an express middleware
-Please use `npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency.
 #####Use as a gulp plugin
 `bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
-#####Use as a command line program
-`bracks-parser` can be used as a command line tool as well. If you are interested about that, please read [bracks-cli](https://github.com/mawni/nodejs-bracks-cli).
+
+#####Install `bracks-parser` for use as an express middleware
+`npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency.
+
+#####Install `bracks-parser` for use as a command line tool
+`bracks-parser` needs to be exposed globally in order to be used as a command line program. So, please use `npm install -g bracks-parser`. Then, issue `bracks -v` to make sure that it has been installed successfully. If you encounter with a problem or getting `EACCES` error, please read [fixing-npm-permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions). If still not successful, please mention that in the `issues`. It will be responded back as fast as possible.
+
 #####Performance
 Here is what happens under the hood:
 
@@ -180,8 +183,8 @@ html[
   ]body
 ]html
 ```
-#####How to use with express
-If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory.
+#####How to use `bracks-parser` as an express middleware
+If you want to write your `html` or `ejs` files in a `bracks` style, (after installing it locally) just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory.
 
 So, something like the following will do the job for you.
 
@@ -244,6 +247,32 @@ bracks
 As we run our app, `bracks-parser` reads all the files under `bracks` directory. If it finds any errors, it passes the control to the next middleware by passing that error as an argument. If it doesn't find any errors, it parses all the files and pipes them all with clean and complete html or ejs format to the project root directory. In other words, it parses them all and makes them ready for express to render them. So it means as we write our application and progress, our updated (correct html or ejs formatted) files are dynamically being overwritten whenever we change `bracks` files.
 
 Just as a reminder, since `bracks-parser` is basically a development tool, when you are done writing in a `bracks` style and you don't need it anymore, if you want, you can just simply delete the `bracks` directory, remove the parser from the stack of middlewares in your application, and uninstall `bracks-parser`.
+
+#####How to use `bracks-parser` as a command line tool
+After installing it globally, you can use `bracks` either by manually run it whenever you want and pass the `-o` (flag for output), or you can have it watch the provided *bracks* directory by passing the `-w` (flag for watch).
+
+If you run it with `-o` flag, here is how you can use it:
+
+Please create a directory and name it `bracks`. Then, put all `html` or `ejs` files that are written in a `bracks` syntax in this direcory. Files can be located in sub-direcories in this `bracks` directory. It doesn't matter. The parser will find them, convert them all to html or ejs, and pipe the result documents to the provided destination. Notice `bracks` understands both `.html` and `.ejs`.
+
+If you run it with `-w` flag, here is how you can use it:
+	
+Instead of writing all files completely and then pass them to `bracks`, you can have it watch the provided *bracks* directory. By running it this way, upon any changes in any files under the given *bracks* directory, the parser parses the files, converts them all to html or ejs (whatever the original file extension is), and pipes the result documents to the provided target directory. Please notice here, in this mode, if the parser doesn't find any errors, nothing will be shown on the console in order to avoid disrupting the flow of development. So, if you don't see any errors on the console after you saved your file, you can have a pretty good confidence that changes were being transferred correctly to the corresponding file under the provided target directory.
+
+#####List of command line options
+The complete list of `bracks` command line options:
+
+1. `bracks -o <path to bracks directory> <target directory>`
+
+    example: `bracks -o /home/yourproj/bracks /home/yourproj/views`
+
+2. `bracks -w <path to bracks directory> <target directory>`
+
+    example: `bracks -w /home/yourproj/bracks /home/yourproj/views`
+
+3. `bracks -v` (show the current version of the app)
+
+4. `bracks -h` (show the help menu)w
 
 So, it is nothing crazy about this. Everything is as usual. We just write our view files `bracks` style, which hopefully gives us the ability to write html and/or ejs simpler, faster with less tediousness.
 

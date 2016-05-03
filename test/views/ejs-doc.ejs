@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<% include partials/template/head.ejs %>
+	</head>
+	<body class="<%= page %>">
+		<% include partials/template/header.ejs %>
+		<section id="someid" class="layout">
+			<div class="primary">
+				<%- include partials/content/aboutme.ejs -%>
+			</div>
+			<p>some long paragraph that ends with break</p><br>
+			<p>some other paragraph after the break</p>
+			<aside id="asideid" class="secondary">
+				<% include partials/content/sidebar.ejs %>
+			</aside>
+		</section>
+		<% include partials/template/footer.ejs %>
+		<p>a some s samp footer script head header tester p</p>
+	</body>
+</html>
