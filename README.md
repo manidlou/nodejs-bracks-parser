@@ -192,7 +192,7 @@ html[
 ]html
 ```
 #####How to use `bracks-parser` as an express middleware
-If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory.
+If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory. The parser naturally presumes everything under `bracks` directory are in a `bracks` style. As a result, they all being converted to html and/or ejs (based on the original file extension) and then being copied to the provided target directory. For example, if you have *views* directory under *bracks* directory, the entire *views* directory being converted and piped to current working directory (or basically the project root directory). Notice `bracks` understands both `.html` and `.ejs`.
 
 So, something like the following will do the job for you.
 
