@@ -8,11 +8,18 @@
 #####Use as a gulp plugin
 `bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
 
+####Important Announcement
+As of version 5.0.0, [bracks-cli](https://github.com/mawni/bracks-cli) is embedded in the heart of `bracks-parser`. As a result, [bracks-cli](https://github.com/mawni/bracks-cli) is deprecated and is not available as a separate module anymore. So, basically by installing one module users have access to both styles of usage, it is only the matter of installing it locally or globally. The reason for that is mostly for the convenience of the users and also in order to keep it as concise as possible while still maintaining practicality, speed, efficiency, and reliability.
+
 #####Install `bracks-parser` for use as an express middleware
-`npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency.
+`npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency. please read down below to see how it easily can be used as an [express](http://expressjs.com) middleware.
 
 #####Install `bracks-parser` for use as a command line tool
 `bracks-parser` needs to be exposed globally in order to be used as a command line program. So, please use `npm install -g bracks-parser`. Then, issue `bracks -v` to make sure that it has been installed successfully. If you encounter with a problem or getting `EACCES` error, please read [fixing-npm-permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions). If still not successful, please mention that in the `issues`. It will be responded back as fast as possible.
+
+Notice when you install it globally, the name of the binary executable is simply just `bracks`. It means, you run `bracks` command on the shell like `bracks -v` or `bracks -h`. Please read down below to see how it can also be easily used this way.
+
+Simplicity always matters!
 
 #####Performance
 Here is what happens under the hood:
@@ -253,7 +260,7 @@ After installing it globally, you can use `bracks` either by manually run it whe
 
 If you run it with `-o` flag, here is how you can use it:
 
-Please create a directory and name it `bracks`. Then, put all `html` or `ejs` files that are written in a `bracks` syntax in this direcory. Files can be located in sub-direcories in this `bracks` directory. It doesn't matter. The parser will find them, convert them all to html or ejs, and pipe the result documents to the provided destination. Notice `bracks` understands both `.html` and `.ejs`.
+Please create a directory and name it `bracks`. Then, put all `html` or `ejs` files that are written in a `bracks` syntax in this direcory. Files can be located in sub-direcories in this `bracks` directory. It doesn't matter. The parser will find them, convert them all to html or ejs, and pipe the result documents to the provided destination. The parser presumes everything under `bracks` directory are in a `bracks` style. As a result, they all being converted to html and/or ejs and basically being copied to the provided target directory. Notice `bracks` understands both `.html` and `.ejs`.
 
 If you run it with `-w` flag, here is how you can use it:
 	
