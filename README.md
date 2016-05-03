@@ -34,7 +34,7 @@ Of course, any help, idea, criticism would be all absolutely appreciated.
 #####`bracks` simple syntax
 Since html document structure relies on start and end tags, we still need an identifier to distinguish them from the rest of the text. `bracks` uses `[]` and `()` as the main identifiers. Simply for a normal element, all attributes and their values are placed in `()`, and all the contents of the element are placed in `[]`. Here is how we can use `bracks`:
 
-**Important Notice**: `bracks` is **not** a whitespace sensitive syntax. Also, `bracks-parser` doesn't care about whitespace before the first character of each line. In other words, it doesn't touch the indentation of the source file. The indentation of the final result is going to be the same as the source file. If the following simple agreements are maintained throughtout the entire code, you are going to receive your code in a clean and correct format.
+**Important Notice**: `bracks` is **not** a whitespace sensitive syntax. Also, `bracks-parser` doesn't touch the whitespaces in the document. So it means the indentation of the final result is going to be the same as the source file. If the following simple agreements are maintained throughtout the entire code, you are going to receive your code in a clean and correct format.
 
 **1. comments**
 
@@ -190,7 +190,7 @@ html[
 ]html
 ```
 #####How to use `bracks-parser` as an express middleware
-If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory. The parser naturally presumes everything under `bracks` directory are in a `bracks` style. As a result, they all being converted to html and/or ejs (based on the original file extension) and then being copied to the provided target directory. For example, if you have *views* directory under *bracks* directory, the entire *views* directory being converted and piped to current working directory (or basically the project root directory). Notice `bracks` understands both `.html` and `.ejs`.
+If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory. Notice, the parser naturally presumes everything under `bracks` directory is written in a `bracks` style. As a result, they all being converted to html and/or ejs (based on the original file extension) and then being copied to the project root directory. For example, if you have *views* directory under *bracks* directory, the entire *views* directory being converted and piped to project root directory (please see the following example). Also, notice `bracks` understands both `.html` and `.ejs`.
 
 So, something like the following will do the job for you.
 
@@ -257,7 +257,7 @@ After installing it with `-g` flag, you can use `bracks` either by manually run 
 
 If you run it with `-o`, here is how you can use it:
 
-Please create a directory and name it `bracks`. Then, put all `html` or `ejs` files that are written in a `bracks` syntax in this direcory. Files can be located in sub-direcories in this `bracks` directory. It doesn't matter. The parser will find them, convert them all to html or ejs, and pipe the result documents to the provided destination. The parser presumes everything under `bracks` directory are in a `bracks` style. As a result, they all being converted to html and/or ejs and basically being copied to the provided target directory. Notice `bracks` understands both `.html` and `.ejs`.
+Please create a directory and name it `bracks`. Then, put all `html` or `ejs` files that are written in a `bracks` syntax in this direcory. Files can be located in sub-direcories. It doesn't matter. The parser will find them, convert them all to html or ejs, and pipe the result documents to the provided destination. The parser presumes everything under `bracks` directory is written in a `bracks` style. As a result, they all being converted to html and/or ejs and being piped to the provided target directory.
 
 If you run it with `-w`, here is how you can use it:
 
