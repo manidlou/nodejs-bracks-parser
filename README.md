@@ -3,10 +3,7 @@
 [![travis build][travis-image]][travis-url] [![npm version][npm-image]][npm-url] [![npm downloads][downloads-image]][downloads-url] 
 
 ####Important Announcement
-As of version 5.0.0, [bracks-cli](https://github.com/mawni/nodejs-bracks-cli) is embedded in the heart of `bracks-parser` (this module). As a result, [bracks-cli](https://github.com/mawni/nodejs-bracks-cli) is deprecated and is not available as a separate module anymore because it wasn't necessary for it to be existed as a seperate module. Furthermore, it is mostly for the convenience of users and also in order to keep it as concise as possible while still maintaining practicality, speed, efficiency, and reliability. So, basically by installing one module, the `bracks-parser`, users have access to both styles of usage, it is only the matter of installing it locally or globally.
-
-#####Introduction
-`bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
+As of version 5.0.0, [bracks-cli](https://github.com/mawni/nodejs-bracks-cli) is embedded in the heart of `bracks-parser` (this module). As a result, [bracks-cli](https://github.com/mawni/nodejs-bracks-cli) is deprecated and is not available as a separate module anymore because it wasn't necessary for it to be existed as a distinct module. Furthermore, it is mostly for the convenience of users and also in order to keep it as concise as possible while still maintaining practicality, speed, efficiency, and reliability. So, basically by installing one module, the `bracks-parser`, users have access to both styles of usage, it is only the matter of installing it locally or globally.
 
 #####Use as a gulp plugin
 `bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
@@ -25,6 +22,10 @@ For me, simplicity in computing always matters since it normally leads to fewer 
 Here is what happens under the hood:
 
 The parser gets all source files under given `bracks` directory as a stream of [vinyl](https://github.com/gulpjs/vinyl) file objects, pipes them [through2](https://github.com/rvagg/through2) transform function, parses them all, and pipes the result documents to their destination under project root directory. In case of [express](http://expressjs.com) application, it calls the `next` middleware on `end` event.
+
+#####What is this thing?
+`bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
+
 #####Rationale
 I've always found `<` and `>` so annoying and tedious in writing [html](https://www.w3.org/TR/html5). For one complete element we have to insert four of `<`, `>`. The argument is that inserting `<` and `>` decreases the speed and distrupts the flow of writing html code. Primarily, in a usual case inserting `<` and `>` requires a second key, usually the shift-key or another key, to be triggered. Honestly, how many times you meant to type `<` but the output was `,`! It happened to me a lot. Furthermore, cleaner code, it means the code that is easier for eyes to track and distinguish various characters without falling into momentary confusion, leads to the code that is easier to read and also is less-error-prone. `bracks` gives us the ability to write our html with less tediousness because we no longer need to insert `<` and `>` each time for each tag name. As long as we follow a few simple agreements, we write html without any angle brackets because `bracks-parser` will add them for us.
 
