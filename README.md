@@ -2,14 +2,14 @@
 
 [![travis build][travis-image]][travis-url] [![npm version][npm-image]][npm-url] [![npm downloads][downloads-image]][downloads-url] 
 
+####Important Announcement
+As of version 5.0.0, [bracks-cli](https://github.com/mawni/bracks-cli) is embedded in the heart of `bracks-parser`. As a result, [bracks-cli](https://github.com/mawni/bracks-cli) is deprecated and is not available as a separate module anymore. So, basically by installing one module, the `bracks-parser`, users have access to both styles of usage, it is only the matter of installing it locally or globally. The reason for that is mostly for the convenience of users and also in order to keep it as concise as possible while still maintaining practicality, speed, efficiency, and reliability.
+
 #####Introduction
 `bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
 
 #####Use as a gulp plugin
 `bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
-
-####Important Announcement
-As of version 5.0.0, [bracks-cli](https://github.com/mawni/bracks-cli) is embedded in the heart of `bracks-parser`. As a result, [bracks-cli](https://github.com/mawni/bracks-cli) is deprecated and is not available as a separate module anymore. So, basically by installing one module users have access to both styles of usage, it is only the matter of installing it locally or globally. The reason for that is mostly for the convenience of the users and also in order to keep it as concise as possible while still maintaining practicality, speed, efficiency, and reliability.
 
 #####Install `bracks-parser` for use as an express middleware
 `npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency. please read down below to see how it easily can be used as an [express](http://expressjs.com) middleware.
