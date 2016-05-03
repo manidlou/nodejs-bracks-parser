@@ -12,7 +12,7 @@ As of version 5.0.0, [bracks-cli](https://github.com/mawni/nodejs-bracks-cli) is
 `bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
 
 #####Install `bracks-parser` for use as an express middleware
-`npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency. please read down below to see how it easily can be used as an [express](http://expressjs.com) middleware.
+`npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency. please read down below to see how it can easily be used as an [express](http://expressjs.com) middleware.
 
 #####Install `bracks-parser` for use as a command line tool
 `bracks-parser` needs to be exposed globally in order to be used as a command line program. So, please use `npm install -g bracks-parser`. Then, issue `bracks -v` to make sure that it has been installed successfully. If you encounter with a problem or getting `EACCES` error, please read [fixing-npm-permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions). If still not successful, please mention that in the `issues`. It will be responded back as fast as possible.
@@ -191,7 +191,7 @@ html[
 ]html
 ```
 #####How to use `bracks-parser` as an express middleware
-If you want to write your `html` or `ejs` files in a `bracks` style, (after installing it locally) just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory.
+If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The `bracks-parser` will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory.
 
 So, something like the following will do the job for you.
 
@@ -199,11 +199,9 @@ So, something like the following will do the job for you.
 var express = require('express');
 var bracks_parser = require('bracks-parser');
 
-// if you run the app from your project root directory,
-// and `bracks` directory is under your project root directory, 
-// the path to `bracks` directory can be also set like 
-// var path_to_bracks_directory = './bracks';
-var path_to_bracks_directory = '/absolute/path/to/bracks';
+// var path_to_bracks_directory = '/path/to/bracks';
+// which for the most cases can be set like
+var path_to_bracks_directory = './bracks';
 
 var app = express();
 
