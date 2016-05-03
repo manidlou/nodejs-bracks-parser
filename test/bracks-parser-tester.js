@@ -1,19 +1,9 @@
 'use strict';
 
-/**
- * Module dependencies.
- * @private
- */
-
 const path = require('path');
 const Vfile = require('vinyl');
 const vfs = require('vinyl-fs');
 const thru = require('through2');
-
-/**
- * end tags regular expressions object mapping
- * @private
- */
 
 const END_TAGS = {
   '</a>': /(?:\]\ba\b)/g,
@@ -107,11 +97,6 @@ const END_TAGS = {
   '</var>': /(?:\]\bvar\b)/g,
   '</video>': /(?:\]\bvideo\b)/g
 };
-
-/**
- * start tags without attributes regular expressions object mapping
- * @private
- */
 
 const START_TAGS_WITHOUT_ATTR = {
   '<a>': /(?:\ba\b\[)/g,
@@ -208,11 +193,6 @@ const START_TAGS_WITHOUT_ATTR = {
   '<video>': /(?:\bvideo\b\[)/g
 };
 
-/**
- * void tags without attributes regular expressions object mapping
- * @private
- */
-
 const VOID_TAGS_WITHOUT_ATTR = {
   '<area>': /(?:\[\barea\b\])/g,
   '<base>': /(?:\[\bbase\b\])/g,
@@ -230,11 +210,6 @@ const VOID_TAGS_WITHOUT_ATTR = {
   '<track>': /(?:\[\btrack\b\])/g,
   '<wbr>': /(?:\[\bwbr\b\])/g
 };
-
-/**
- * start and void tags with attributes regular expressions object mapping
- * @private
- */
 
 const START_VOID_TAGS_WITH_ATTR = {
   '<a ': /(?:\ba\b\()/g,
@@ -346,11 +321,6 @@ const START_VOID_TAGS_WITH_ATTR = {
   '<wbr ': /(?:\bwbr\b\()/g
 };
 
-/**
- * ejs specific tags regular expressions object mapping
- * @private
- */
-
 const EJS_TAGS = {
   '<%': /(?:\[%)/g,
   '<%=': /(?:%=)/g,
@@ -362,15 +332,6 @@ const EJS_TAGS = {
   '<%_': /(?:%_)/g,
   '_%>': /(?:_%)/g
 };
-
-/**
- * resolve parsed file path
- *
- * @param {Object} [file] a vinyl file object
- * @param {Function} [callback] a callback function
- * @return {Function} callback function containing either an error or the resolved file path
- * @private
- */
 
 function resolve_file_path(file, callback) {
   var resolved_path = '';
@@ -387,15 +348,6 @@ function resolve_file_path(file, callback) {
     return callback(null, resolved_path);
   }
 }
-
-/**
- * parse 'bracks' style html document. return the parsed regular html document.
- *
- * @param {Object} [file] a vinyl file object
- * @param {Function} [callback] a callback function
- * @return {Function} callback function containing the parsed regular html
- * @private
- */
 
 function parse_html(file, callback) {
   var src = file.contents.toString();
@@ -418,18 +370,16 @@ function parse_html(file, callback) {
   return callback(src);
 }
 
-module.exports = function(bracks_src_path, callback) {
-  var transformed_file, transformed_ejs_src, error;
+module.exports = function(bracks_src_path, cb) {
+  var transformed_file, transformed_ejs_src;
   vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
     .pipe(thru.obj(function(file, enc, callback) {
       if (file.isNull()) {
-        error = new Error('bracks-parser error -> input file is null');
         return callback(new Error('bracks-parser error -> input file is null'), file);
       }
       if (file.extname === '.html') {
         resolve_file_path(file, function(err, resolved_path) {
           if (err !== null) {
-            error = new Error(err);
             return callback(new Error(err), file);
           } else {
             parse_html(file, function(transformed_html_src) {
@@ -446,7 +396,6 @@ module.exports = function(bracks_src_path, callback) {
       } else if (file.extname === '.ejs') {
         resolve_file_path(file, function(err, resolved_path) {
           if (err !== null) {
-            error = new Error(err);
             return callback(new Error(err), file);
           } else {
             parse_html(file, function(transformed_html_src) {
@@ -467,6 +416,6 @@ module.exports = function(bracks_src_path, callback) {
       }
     })).pipe(vfs.dest('./'))
   .on('end', function() {
-    return callback(null, true);
+    return cb(null, 0);
   });
 };

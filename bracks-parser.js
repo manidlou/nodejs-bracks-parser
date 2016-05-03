@@ -401,7 +401,7 @@ function resolve_file_path(file, callback) {
   var split_path = (file.path).split('/');
   var i;
   if (split_path.indexOf('bracks') === -1) {
-    return callback('bracks-parser error -> path to \'bracks\' directory cannot be null.', file);
+    return callback(new Error('bracks-parser error -> path to \'bracks\' directory cannot be null.'), file);
   } else {
     split_path.splice(split_path.indexOf('bracks'), 1);
     for (i = 0; i < split_path.length; i += 1) {
@@ -462,16 +462,14 @@ function bracks_parser(bracks_src_path) {
     vfs.src(path.join(bracks_src_path, '/**/*.+(html|ejs)'))
       .pipe(thru.obj(function(file, enc, callback) {
         if (file.isNull()) {
-          error = new Error('bracks-parser error -> input file is null');
-          next(error);
+          next(new Error('bracks-parser error -> input file is null'));
           return callback(new Error('bracks-parser error -> input file is null'), file);
         }
         if (file.extname === '.html') {
           resolve_file_path(file, function(err, resolved_path) {
             if (err !== null) {
-              error = new Error(err);
-              next(error);
-              return callback(new Error(err), file);
+              next(err);
+              return callback(err, file);
             } else {
               parse_html(file, function(transformed_html_src) {
                 transformed_file = new Vfile({
@@ -487,9 +485,8 @@ function bracks_parser(bracks_src_path) {
         } else if (file.extname === '.ejs') {
           resolve_file_path(file, function(err, resolved_path) {
             if (err !== null) {
-              error = new Error(err);
-              next(error);
-              return callback(new Error(err), file);
+              next(err);
+              return callback(err, file);
             } else {
               parse_html(file, function(transformed_html_src) {
                 transformed_ejs_src = transformed_html_src;
