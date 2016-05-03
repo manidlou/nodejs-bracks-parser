@@ -16,8 +16,6 @@ As of version 5.0.0, [bracks-cli](https://github.com/mawni/nodejs-bracks-cli) is
 
 Notice when you install it globally, the name of the binary executable is simply just `bracks`. It means, you run `bracks` command on the shell like `bracks -v` or `bracks -h`. Please read down below to see how it can also be easily used this way.
 
-For me, simplicity in computing always matters since it normally leads to fewer possible errors!
-
 #####Performance
 Here is what happens under the hood:
 
@@ -255,14 +253,14 @@ As we run our app, `bracks-parser` reads all the files under `bracks` directory.
 Just as a reminder, since `bracks-parser` is basically a development tool, when you are done writing in a `bracks` style and you don't need it anymore, if you want, you can just simply delete the `bracks` directory, remove the parser from the stack of middlewares in your application, and uninstall `bracks-parser`.
 
 #####How to use `bracks-parser` as a command line tool
-After installing it globally, you can use `bracks` either by manually run it whenever you want and pass the `-o` (flag for output), or you can have it watch the provided *bracks* directory by passing the `-w` (flag for watch).
+After installing it with `-g` flag, you can use `bracks` either by manually run it whenever you want and pass the `-o` (flag for output), or you can have it watch the provided *bracks* directory by passing the `-w` (flag for watch).
 
-If you run it with `-o` flag, here is how you can use it:
+If you run it with `-o`, here is how you can use it:
 
 Please create a directory and name it `bracks`. Then, put all `html` or `ejs` files that are written in a `bracks` syntax in this direcory. Files can be located in sub-direcories in this `bracks` directory. It doesn't matter. The parser will find them, convert them all to html or ejs, and pipe the result documents to the provided destination. The parser presumes everything under `bracks` directory are in a `bracks` style. As a result, they all being converted to html and/or ejs and basically being copied to the provided target directory. Notice `bracks` understands both `.html` and `.ejs`.
 
-If you run it with `-w` flag, here is how you can use it:
-	
+If you run it with `-w`, here is how you can use it:
+
 Instead of writing all files completely and then pass them to `bracks`, you can have it watch the provided *bracks* directory. By running it this way, upon any changes in any files under the given *bracks* directory, the parser parses the files, converts them all to html or ejs (whatever the original file extension is), and pipes the result documents to the provided target directory. Please notice here, in this mode, if the parser doesn't find any errors, nothing will be shown on the console in order to avoid disrupting the flow of development. So, if you don't see any errors on the console after you saved your file, you can have a pretty good confidence that changes were being transferred correctly to the corresponding file under the provided target directory.
 
 #####List of command line options
