@@ -19,9 +19,9 @@ describe("parse bracks-style html with nested elements", function() {
   });
 });
 
-describe("parse bracks-style ejs with nested elements", function() {
+describe("parse bracks-style ejs", function() {
   var result_ejs, correct_ejs;
-  it("should be equal to correct regular ejs with nested elements", function(done) {
+  it("should be equal to correct regular ejs", function(done) {
     bracks_parser_tester(path.join(process.cwd(), 'test', 'bracks'), function(err, ok) {
       if (err !== null) {
         throw err;
