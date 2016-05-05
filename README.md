@@ -3,7 +3,7 @@
 [![travis build][travis-image]][travis-url] [![npm version][npm-image]][npm-url] 
 
 ####Important Announcement
-`bracks` is the new name for [bracks-parser](https://github.com/mawni/nodejs-bracks-parser). It is exactly the same package, just with a new name.
+`bracks` is the new name for [bracks-parser](https://github.com/mawni/nodejs-bracks-parser) that is deprecated.
 
 #####Use as a gulp plugin
 `bracks` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
