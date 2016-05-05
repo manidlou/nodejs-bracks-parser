@@ -24,7 +24,6 @@
 
 /**
  * bracks for use as an express middleware
- * 
  */
 
 'use strict';
