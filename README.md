@@ -280,7 +280,7 @@ So, it is nothing crazy about this. Everything is as usual. We just write our vi
 
 [travis-image]: https://img.shields.io/travis/mawni/nodejs-bracks/master.svg
 [travis-url]: https://travis-ci.org/mawni/nodejs-bracks
-[npm-image]: https://img.shields.io/npm/v/bracks-parser.svg?maxAge=2592000
-[npm-url]: https://npmjs.org/package/bracks-parser
-[downloads-image]: https://img.shields.io/npm/dm/bracks-parser.svg?maxAge=2592000
-[downloads-url]: https://npmjs.org/package/bracks-parser
+[npm-image]: https://img.shields.io/npm/v/bracks.svg?maxAge=2592000
+[npm-url]: https://npmjs.org/package/bracks
+[downloads-image]: https://img.shields.io/npm/dm/bracks.svg?maxAge=2592000
+[downloads-url]: https://npmjs.org/package/bracks
