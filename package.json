@@ -1,6 +1,6 @@
 {
   "name": "bracks",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "description": "An alternative style of writing html and ejs without using angle brackets for elements",
   "main": "bracks-parser.js",
   "bin": {
