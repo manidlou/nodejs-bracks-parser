@@ -204,7 +204,7 @@ app.set('view engine', 'ejs');
 
 app.use(bracks_parser(path_to_bracks_directory));
 ```
-normally it is a good idea to put `bracks` early on top of stack of middlewares since express renders html or ejs not the `bracks` one.
+normally it is a good idea to put `bracks-parser` early on top of stack of middlewares since express renders html or ejs not the `bracks` one.
 
 #####Example of `views` directory with sub-directories
 
@@ -225,7 +225,7 @@ views
   |__error.ejs
 
 ```
-As long as we want to write our view files in a `bracks` syntax, we use it as a middleware and keep the same file structure as `views` directory in `bracks` directory. As a result, we have something like the following,
+As long as we want to write our view files in a `bracks` syntax, we use the parser as a middleware and keep the same file structure as `views` directory in `bracks` directory. As a result, we have something like the following,
 
 ```
 bracks
