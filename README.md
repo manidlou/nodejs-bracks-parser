@@ -245,7 +245,7 @@ bracks
 
 As we run our app, the parser reads all the files under `bracks` directory. If it finds any errors, it passes the control to the next middleware by passing that error as an argument. If it doesn't find any errors, it parses all the files and pipes them all with clean and complete html or ejs format to the project root directory. In other words, it parses them all and makes them ready for express to render them. So it means as we write our application and progress, our updated (correct html or ejs formatted) files are dynamically being overwritten whenever we change `bracks` files.
 
-Just as a reminder, since `bracks` is basically a development tool, when you are done writing in a `bracks` style and you don't need it anymore, if you want, you can just simply delete the `bracks` directory, remove the parser from the stack of middlewares in your application, and uninstall `bracks`.
+Just as a reminder, since `bracks` is basically a development tool, when you are done writing in a `bracks` style and you don't need it anymore, if you want, you can just simply delete the `bracks` directory, remove the parser from the stack of middlewares in your application, and uninstall `bracks-parser`.
 
 So, it is nothing crazy about this. Everything is as usual. We just write our view files `bracks` style, which hopefully gives us the ability to write html and/or ejs simpler, faster with less tediousness.
 
