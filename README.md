@@ -8,7 +8,7 @@
 #####Use as a command line interface
 `bracks-parser` can be used as a command line utility as well. If you are interested about that, please read [bracks-cli](https://github.com/mawni/bracks-cli).
 
-#####Install `bracks` for use as an express middleware
+#####Install `bracks-parser` for use as an express middleware
 `npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency. please read down below to see how it can easily be used as an [express](http://expressjs.com) middleware.
 
 #####Performance

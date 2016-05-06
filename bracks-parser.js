@@ -1,4 +1,3 @@
-
 /*!
  * bracks-parser.js
  * This software is released under the MIT license:
@@ -24,7 +23,7 @@
  */
 
 /**
- * bracks for use as an express middleware
+ * bracks-parser for use as an express middleware
  */
 
 'use strict';
