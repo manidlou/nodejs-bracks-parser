@@ -1,3 +1,4 @@
+
 /*!
  * bracks-parser.js
  * This software is released under the MIT license:
