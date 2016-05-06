@@ -1,5 +1,5 @@
 {
-  "name": "bracks",
+  "name": "bracks-parser",
   "version": "5.0.1",
   "description": "An alternative style of writing html and ejs that eliminates the necessity of using angle brackets for elements",
   "main": "bracks-parser.js",
@@ -21,12 +21,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mawni/nodejs-bracks.git"
+    "url": "git+https://github.com/mawni/nodejs-bracks-parser.git"
   },
   "bugs": {
-    "url": "https://github.com/mawni/nodejs-bracks/issues"
+    "url": "https://github.com/mawni/nodejs-bracks-parser/issues"
   },
-  "homepage": "https://github.com/mawni/nodejs-bracks#readme",
+  "homepage": "https://github.com/mawni/nodejs-bracks-parser#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5"

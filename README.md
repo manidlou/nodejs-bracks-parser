@@ -1,26 +1,23 @@
-#bracks
+#bracks-parser
 
 [![travis build][travis-image]][travis-url] [![npm version][npm-image]][npm-url] 
 
-####Important Announcement
-`bracks` is the new name for [bracks-parser](https://github.com/mawni/nodejs-bracks-parser) module that is deprecated.
-
 #####Use as a gulp plugin
-`bracks` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
+`bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
 
 #####Use as a command line interface
-`bracks` can be used as a command line utility as well. If you are interested about that, please read [bracks-cli](https://github.com/mawni/bracks-cli).
+`bracks-parser` can be used as a command line utility as well. If you are interested about that, please read [bracks-cli](https://github.com/mawni/bracks-cli).
 
 #####Install `bracks` for use as an express middleware
-`npm install bracks`, or `npm install bracks --save-dev` if you want to install it as a development dependency. please read down below to see how it can easily be used as an [express](http://expressjs.com) middleware.
+`npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency. please read down below to see how it can easily be used as an [express](http://expressjs.com) middleware.
 
 #####Performance
 Here is what happens under the hood:
 
 The parser gets all source files under given `bracks` directory as a stream of [vinyl](https://github.com/gulpjs/vinyl) file objects, pipes them [through2](https://github.com/rvagg/through2) transform function, parses them all, and pipes the result documents to their destination under project root directory. In case of [express](http://expressjs.com) application, it calls the `next` middleware on `end` event.
 
-#####What is this thing?
-`bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) without any need to use `<`, `>` for identifying elements.
+#####What is this `bracks` thing?
+`bracks` (short for brackets) is an alternative and relatively faster way of writing [html](https://www.w3.org/TR/html5) and [ejs](https://github.com/mde/ejs) that doesn't use `<`, `>` for identifying elements. Instead, `[]` and `()` are the main identifiers.
 
 #####Rationale
 I've always found `<` and `>` so annoying and tedious in writing [html](https://www.w3.org/TR/html5). For one complete element we have to insert four of `<`, `>`. The argument is that inserting `<` and `>` decreases the speed and distrupts the flow of writing html code. Primarily, in a usual case inserting `<` and `>` requires a second key, usually the shift-key or another key, to be triggered. Honestly, how many times you meant to type `<` but the output was `,`! It happened to me a lot. Furthermore, cleaner code, it means the code that is easier for eyes to track and distinguish various characters without falling into momentary confusion, leads to the code that is easier to read and also is less-error-prone. `bracks` gives us the ability to write our html with less tediousness because we no longer need to insert `<` and `>` each time for each tag name. As long as we follow a few simple agreements, we write html without any angle brackets because `bracks-parser` will add them for us.
@@ -187,14 +184,14 @@ html[
   ]body
 ]html
 ```
-#####How to use `bracks` as an express middleware
+#####How to use `bracks-parser` as an express middleware
 If you want to write your `html` or `ejs` files in a `bracks` style, just create a directory under your project root directory and name it `bracks`. Then, keep all the `html` or `ejs` files that you want to write in a `bracks` syntax in this `bracks` direcory. Files can be located in sub-direcories. It doesn't matter. The parser will find them, convert them all to html or ejs, and pipe the result documents to their destinations under project root directory. Notice, the parser naturally presumes everything under `bracks` directory is written in a `bracks` style. As a result, they all being converted to html and/or ejs (based on the original file extension) and then being copied to the project root directory. For example, if you have *views* directory under *bracks* directory, the entire *views* directory being converted and piped to project root directory (please see the following example). Also, notice `bracks` understands both `.html` and `.ejs`.
 
 So, something like the following will do the job for you.
 
 ```javascript
 var express = require('express');
-var bracks_parser = require('bracks');
+var bracks_parser = require('bracks-parser');
 
 // var path_to_bracks_directory = '/path/to/bracks';
 // which for the most cases can be set like
@@ -252,9 +249,9 @@ Just as a reminder, since `bracks` is basically a development tool, when you are
 
 So, it is nothing crazy about this. Everything is as usual. We just write our view files `bracks` style, which hopefully gives us the ability to write html and/or ejs simpler, faster with less tediousness.
 
-[travis-image]: https://img.shields.io/travis/mawni/nodejs-bracks/master.svg
-[travis-url]: https://travis-ci.org/mawni/nodejs-bracks
-[npm-image]: https://img.shields.io/npm/v/bracks.svg?maxAge=2592000
-[npm-url]: https://npmjs.org/package/bracks
-[downloads-image]: https://img.shields.io/npm/dm/bracks.svg?maxAge=2592000
-[downloads-url]: https://npmjs.org/package/bracks
+[travis-image]: https://img.shields.io/travis/mawni/nodejs-bracks-parser/master.svg
+[travis-url]: https://travis-ci.org/mawni/nodejs-bracks-parser
+[npm-image]: https://img.shields.io/npm/v/bracks-parser.svg?maxAge=2592000
+[npm-url]: https://npmjs.org/package/bracks-parser
+[downloads-image]: https://img.shields.io/npm/dm/bracks-parser.svg?maxAge=2592000
+[downloads-url]: https://npmjs.org/package/bracks-parser
