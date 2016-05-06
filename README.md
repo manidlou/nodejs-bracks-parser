@@ -249,6 +249,7 @@ Just as a reminder, since `bracks` is basically a development tool, when you are
 
 So, it is nothing crazy about this. Everything is as usual. We just write our view files `bracks` style, which hopefully gives us the ability to write html and/or ejs simpler, faster with less tediousness.
 
+
 [travis-image]: https://img.shields.io/travis/mawni/nodejs-bracks-parser/master.svg
 [travis-url]: https://travis-ci.org/mawni/nodejs-bracks-parser
 [npm-image]: https://img.shields.io/npm/v/bracks-parser.svg?maxAge=2592000
