@@ -3,10 +3,10 @@
 [![travis build][travis-image]][travis-url] [![npm version][npm-image]][npm-url] 
 
 #####Use as a gulp plugin
-`bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/mawni/gulp-bracks).
+`bracks-parser` can be used as a [gulp](https://github.com/gulpjs/gulp) plugin as well. If you are interested about that, please read [gulp-bracks](https://github.com/manidlou/gulp-bracks).
 
 #####Use as a command line interface
-`bracks-parser` can be used as a command line utility as well. If you are interested about that, please read [bracks-cli](https://github.com/mawni/bracks-cli).
+`bracks-parser` can be used as a command line utility as well. If you are interested about that, please read [bracks-cli](https://github.com/manidlou/bracks-cli).
 
 #####Install `bracks-parser` for use as an express middleware
 `npm install bracks-parser`, or `npm install bracks-parser --save-dev` if you want to install it as a development dependency. please read down below to see how it can easily be used as an [express](http://expressjs.com) middleware.
@@ -250,9 +250,7 @@ Just as a reminder, since `bracks` is basically a development tool, when you are
 So, it is nothing crazy about this. Everything is as usual. We just write our view files `bracks` style, which hopefully gives us the ability to write html and/or ejs simpler, faster with less tediousness.
 
 
-[travis-image]: https://img.shields.io/travis/mawni/nodejs-bracks-parser/master.svg
-[travis-url]: https://travis-ci.org/mawni/nodejs-bracks-parser
+[travis-image]: https://img.shields.io/travis/manidlou/nodejs-bracks-parser/master.svg
+[travis-url]: https://travis-ci.org/manidlou/nodejs-bracks-parser
 [npm-image]: https://img.shields.io/npm/v/bracks-parser.svg?maxAge=2592000
-[npm-url]: https://npmjs.org/package/bracks-parser
-[downloads-image]: https://img.shields.io/npm/dm/bracks-parser.svg?maxAge=2592000
-[downloads-url]: https://npmjs.org/package/bracks-parser
+[npm-url]: https://www.npmjs.com/package/bracks-parser

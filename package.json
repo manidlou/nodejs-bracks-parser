@@ -4,7 +4,7 @@
   "description": "An alternative style of writing html and ejs that eliminates the necessity of using angle brackets for elements",
   "main": "bracks-parser.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js"
+    "test": "mocha"
   },
   "dependencies": {
     "through2": "^2.0.1",
@@ -17,16 +17,16 @@
     "ejs",
     "bracket"
   ],
-  "author": "Mawni Maghsoudlou",
+  "author": "Mani Maghsoudlou",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mawni/nodejs-bracks-parser.git"
+    "url": "git+https://github.com/manidlou/nodejs-bracks-parser.git"
   },
   "bugs": {
-    "url": "https://github.com/mawni/nodejs-bracks-parser/issues"
+    "url": "https://github.com/manidlou/nodejs-bracks-parser/issues"
   },
-  "homepage": "https://github.com/mawni/nodejs-bracks-parser#readme",
+  "homepage": "https://github.com/manidlou/nodejs-bracks-parser#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5"
